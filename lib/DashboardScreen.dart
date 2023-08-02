@@ -1,28 +1,33 @@
 // dashboard_screen.dart
 import 'package:flutter/material.dart';
 
+import 'HabitTrackingScreen.dart';
+
 class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Replace this with your actual data for habit progress
-    List<bool> habitsProgress = [true, false, true, true, false, true, false, true, false];
+    List<bool> habitsProgress = [false, false, false, false, false, false, false, false, false];
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dashboard'),
+        title: const Text('Dashboard'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'Your Daily Habits',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'Your Daily Habits',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(
               child: ListView.builder(
                 itemCount: 9, // Replace with the actual number of habits
@@ -61,7 +66,7 @@ class HabitCard extends StatelessWidget {
   final String habitTitle;
   final bool isCompleted;
 
-  HabitCard({required this.habitTitle, required this.isCompleted});
+  const HabitCard({Key? key, required this.habitTitle, required this.isCompleted}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +79,13 @@ class HabitCard extends StatelessWidget {
         title: Text(habitTitle),
         // Add an onTap function to navigate to the habit tracking screen for more details
         onTap: () {
-          Navigator.pushNamed(context, '/habit_tracking', arguments: habitTitle);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HabitTrackingScreen(
+              habitTitle: habitTitle)
+            ),
+          );
         },
       ),
     );

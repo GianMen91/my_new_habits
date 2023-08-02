@@ -23,12 +23,12 @@ class _HabitTrackingScreenState extends State<HabitTrackingScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Did you complete this habit today?',
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Checkbox(
               value: isCompleted,
               onChanged: (value) {
@@ -47,7 +47,7 @@ class _HabitTrackingScreenState extends State<HabitTrackingScreen> {
                   SnackBar(content: Text(message)),
                 );
               },
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
           ],
         ),
