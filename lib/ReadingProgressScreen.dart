@@ -1,12 +1,18 @@
 // reading_progress_screen.dart
 import 'package:flutter/material.dart';
 
+import 'DatabaseHelper.dart';
+
+
+
 class ReadingProgressScreen extends StatefulWidget {
   @override
   _ReadingProgressScreenState createState() => _ReadingProgressScreenState();
 }
 
 class _ReadingProgressScreenState extends State<ReadingProgressScreen> {
+  DatabaseHelper _databaseHelper = DatabaseHelper();
+  List<Book> _books = [];
   int _currentPage = 1;
   int _totalPages = 300; // Replace this with the actual total pages of the book
   double _progressPercent = 0.0;
@@ -14,6 +20,7 @@ class _ReadingProgressScreenState extends State<ReadingProgressScreen> {
   @override
   void initState() {
     super.initState();
+    _loadBooksFromDatabase();
     // Calculate the initial progress percentage
     _progressPercent = (_currentPage / _totalPages) * 100;
   }
@@ -24,6 +31,19 @@ class _ReadingProgressScreenState extends State<ReadingProgressScreen> {
       // Recalculate the progress percentage
       _progressPercent = (_currentPage / _totalPages) * 100;
     });
+  }
+
+  void _loadBooksFromDatabase() async {
+    List<Book> books = await _databaseHelper.getBooks();
+    setState(() {
+      _books = books;
+    });
+  }
+
+  void _saveBook(String title, String author, int totalPages) async {
+    Book book = Book(title: title, author: author, currentPage: 0, totalPages: totalPages);
+    await _databaseHelper.insertBook(book);
+    _loadBooksFromDatabase();
   }
 
   @override

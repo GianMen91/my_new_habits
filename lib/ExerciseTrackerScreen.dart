@@ -1,41 +1,70 @@
-// exercise_tracker_screen.dart
 import 'package:flutter/material.dart';
+import 'DatabaseHelper.dart';
 
 class ExerciseTrackerScreen extends StatefulWidget {
+  const ExerciseTrackerScreen({Key? key}) : super(key: key);
+
   @override
   _ExerciseTrackerScreenState createState() => _ExerciseTrackerScreenState();
 }
 
 class _ExerciseTrackerScreenState extends State<ExerciseTrackerScreen> {
+  final DatabaseHelper _databaseHelper = DatabaseHelper();
+  List<ExerciseActivity> _exerciseActivities = [];
   int totalMinutes = 0;
   int exerciseGoal = 60; // Replace with the user's exercise goal (in minutes)
+
+  @override
+  void initState() {
+    super.initState();
+    _loadExerciseActivitiesFromDatabase();
+  }
+
+  void _loadExerciseActivitiesFromDatabase() async {
+    List<ExerciseActivity> exerciseActivities =
+        await _databaseHelper.getExerciseActivities();
+    setState(() {
+      _exerciseActivities = exerciseActivities;
+    });
+  }
+
+  void _saveExerciseActivity(String activityType, int duration) async {
+    String timestamp = DateTime.now().toIso8601String();
+    ExerciseActivity exerciseActivity = ExerciseActivity(
+      activityType: activityType,
+      duration: duration,
+      timestamp: timestamp,
+    );
+    await _databaseHelper.insertExerciseActivity(exerciseActivity);
+    _loadExerciseActivitiesFromDatabase();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Exercise Tracker'),
+        title: const Text('Exercise Tracker'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Total Exercise Minutes Today',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Text(
               '$totalMinutes min',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 // Increment the total exercise minutes (for testing purposes)
@@ -43,12 +72,12 @@ class _ExerciseTrackerScreenState extends State<ExerciseTrackerScreen> {
                   totalMinutes += 30;
                 });
               },
-              child: Text('Log 30 Minutes'),
+              child: const Text('Log 30 Minutes'),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Text(
               'Exercise Goal: $exerciseGoal min',
-              style: TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18),
             ),
             ElevatedButton(
               onPressed: () {
@@ -57,7 +86,7 @@ class _ExerciseTrackerScreenState extends State<ExerciseTrackerScreen> {
                   totalMinutes = 0;
                 });
               },
-              child: Text('Reset'),
+              child: const Text('Reset'),
             ),
           ],
         ),

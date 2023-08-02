@@ -1,10 +1,10 @@
-// habit_tracking_screen.dart
 import 'package:flutter/material.dart';
+import 'DatabaseHelper.dart';
 
 class HabitTrackingScreen extends StatefulWidget {
   final String habitTitle;
 
-  HabitTrackingScreen({required this.habitTitle});
+  const HabitTrackingScreen({Key? key, required this.habitTitle, required bool isCompleted}) : super(key: key);
 
   @override
   _HabitTrackingScreenState createState() => _HabitTrackingScreenState();
@@ -12,6 +12,32 @@ class HabitTrackingScreen extends StatefulWidget {
 
 class _HabitTrackingScreenState extends State<HabitTrackingScreen> {
   bool isCompleted = false;
+  final DatabaseHelper _databaseHelper = DatabaseHelper();
+  List<Habit> _habits = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadHabitsFromDatabase();
+  }
+
+  void _loadHabitsFromDatabase() async {
+    List<Habit> habits = await _databaseHelper.getHabits();
+    setState(() {
+      _habits = habits;
+      // Find the habit corresponding to the habit title
+      Habit? selectedHabit = habits.firstWhere((habit) => habit.name == widget.habitTitle, orElse: () => Habit(name: widget.habitTitle, isCompleted: false));
+      isCompleted = selectedHabit.isCompleted;
+    });
+  }
+
+  void _updateHabitCompletionStatus(int habitId, bool isCompleted) async {
+    await _databaseHelper.updateHabitCompletionStatus(habitId, isCompleted);
+    _loadHabitsFromDatabase();
+
+    // Pass the updated isCompleted status back to the DashboardScreen
+    Navigator.pop(context, isCompleted);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +72,9 @@ class _HabitTrackingScreenState extends State<HabitTrackingScreen> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text(message)),
                 );
+
+                // Call the callback to update the isCompleted status in DashboardScreen
+                _updateHabitCompletionStatus(0, isCompleted);
               },
               child: const Text('Save'),
             ),

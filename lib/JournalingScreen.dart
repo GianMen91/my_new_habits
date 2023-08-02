@@ -1,5 +1,5 @@
-// journaling_screen.dart
 import 'package:flutter/material.dart';
+import 'DatabaseHelper.dart';
 
 class JournalingScreen extends StatefulWidget {
   @override
@@ -7,6 +7,8 @@ class JournalingScreen extends StatefulWidget {
 }
 
 class _JournalingScreenState extends State<JournalingScreen> {
+  DatabaseHelper _databaseHelper = DatabaseHelper();
+  List<JournalEntry> _journalEntries = [];
   TextEditingController goalController = TextEditingController();
   TextEditingController gratitudeController = TextEditingController();
   TextEditingController reflectionsController = TextEditingController();
@@ -19,6 +21,26 @@ class _JournalingScreenState extends State<JournalingScreen> {
     reflectionsController.dispose();
     businessController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadJournalEntriesFromDatabase();
+  }
+
+  void _loadJournalEntriesFromDatabase() async {
+    List<JournalEntry> journalEntries = await _databaseHelper.getJournalEntries();
+    setState(() {
+      _journalEntries = journalEntries;
+    });
+  }
+
+  void _saveJournalEntry(String title, String content) async {
+    String timestamp = DateTime.now().toIso8601String();
+    JournalEntry journalEntry = JournalEntry(title: title, content: content, timestamp: timestamp);
+    await _databaseHelper.insertJournalEntry(journalEntry);
+    _loadJournalEntriesFromDatabase();
   }
 
   @override
