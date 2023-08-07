@@ -1,18 +1,9 @@
-// database_helper.dart
-
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-
 import 'model/todo.dart';
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
-
 
 class DatabaseHelper {
-
   static const _databaseName = 'todo_database.db';
   static const _databaseVersion = 1;
 
@@ -21,7 +12,6 @@ class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
 
   static Database? _database;
-
 
   Future get database async {
     if (_database != null) return _database;
@@ -34,10 +24,8 @@ class DatabaseHelper {
     WidgetsFlutterBinding.ensureInitialized();
     String path = join(await getDatabasesPath(), _databaseName);
 
-    return await openDatabase(
-        path,
-        version: _databaseVersion,
-        onCreate: onCreate);
+    return await openDatabase(path,
+        version: _databaseVersion, onCreate: onCreate);
   }
 
   Future<void> onCreate(Database db, int version) async {
@@ -61,7 +49,6 @@ class DatabaseHelper {
       (8, 'Limiting screen time', 0)
   ''');
   }
-
 
   Future<List<ToDo>> getTodos() async {
     final db = await database;
