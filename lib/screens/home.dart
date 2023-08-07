@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:newmehabits2/model/todo.dart';
 
-import '../model/todo.dart';
 import '../constants/colors.dart';
 import '../widgets/todo_item.dart';
+import '../database_helper.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -12,13 +13,19 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final todosList = ToDo.todoList();
-  List<ToDo> _foundToDo = [];
+  List<ToDo> todosList = [];
 
   @override
   void initState() {
-    _foundToDo = todosList;
+    _loadTodosFromDatabase();
     super.initState();
+  }
+
+  Future<void> _loadTodosFromDatabase() async {
+    final todos = await DatabaseHelper.instance.getTodos();
+    setState(() {
+      todosList = todos;
+    });
   }
 
   @override
@@ -50,9 +57,9 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                       ),
-                      for (ToDo todoo in _foundToDo.reversed)
+                      for (ToDo todo in todosList.reversed)
                         ToDoItem(
-                          todo: todoo,
+                          todo: todo,
                           onToDoChanged: _handleToDoChange,
                           onStartActivity: _deleteToDoItem,
                         ),
@@ -67,15 +74,14 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void _handleToDoChange(ToDo todo) {
-    setState(() {
-      todo.isDone = !todo.isDone;
-    });
+  void _handleToDoChange(ToDo todo) async {
+    todo.isDone = !todo.isDone;
+    await DatabaseHelper.instance.updateTodoStatus(todo);
+    _loadTodosFromDatabase();
   }
 
-  void _deleteToDoItem(String id) {
-    setState(() {
-      todosList.removeWhere((item) => item.id == id);
-    });
+  void _deleteToDoItem(int id) async {
+    await DatabaseHelper.instance.deleteTodoById(id);
+    _loadTodosFromDatabase();
   }
 }

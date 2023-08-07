@@ -1,6 +1,6 @@
 class ToDo {
-  String? id;
-  String? todoText;
+  int id;
+  String todoText;
   bool isDone;
 
   ToDo({
@@ -9,40 +9,20 @@ class ToDo {
     this.isDone = false,
   });
 
-  static List<ToDo> todoList() {
-    return [
-      ToDo(
-        id: '01',
-        todoText: 'Waking up early',
-      ),
-      ToDo(
-        id: '02',
-        todoText: 'Journaling before bed',
-      ),
-      ToDo(
-        id: '03',
-        todoText: 'Learning an online skill',
-      ),
-      ToDo(
-        id: '04',
-        todoText: 'Exercising',
-      ),
-      ToDo(
-        id: '05',
-        todoText: 'Creating a proper sleep schedule',
-      ),
-      ToDo(
-        id: '06',
-        todoText: 'Taking a 30-minute walk in nature',
-      ),
-      ToDo(
-        id: '07',
-        todoText: 'Reading 10 pages a day',
-      ),
-      ToDo(
-        id: '08',
-        todoText: 'Limiting screen time',
-      ),
-    ];
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'todoText': todoText,
+      'isDone': isDone ? 1 : 0,
+    };
   }
+
+  static ToDo fromMap(Map<String, dynamic> map) {
+    return ToDo(
+      id: map['id'],
+      todoText: map['todoText'],
+      isDone: map['isDone'] == 1, // Convert the int value to bool
+    );
+  }
+
 }
