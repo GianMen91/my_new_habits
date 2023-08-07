@@ -61,7 +61,7 @@ class _HomeState extends State<Home> {
                         ToDoItem(
                           todo: todo,
                           onToDoChanged: _handleToDoChange,
-                          onStartActivity: _deleteToDoItem,
+                          onStartActivity: _handleStartActivity,
                         ),
                     ],
                   ),
@@ -80,8 +80,7 @@ class _HomeState extends State<Home> {
     _loadTodosFromDatabase();
   }
 
-  void _deleteToDoItem(int id) async {
-    await DatabaseHelper.instance.deleteTodoById(id);
-    _loadTodosFromDatabase();
+  void _handleStartActivity(int id) async {
+    //go to the related screen
   }
 }
