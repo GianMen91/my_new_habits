@@ -5,6 +5,7 @@ import '../constants/colors.dart';
 import '../widgets/todo_item.dart';
 import '../database_helper.dart';
 
+
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -14,10 +15,13 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<ToDo> todosList = [];
+  String todayDate = '';
+
 
   @override
   void initState() {
     _loadTodosFromDatabase();
+    _loadTodayDate();
     super.initState();
   }
 
@@ -26,6 +30,12 @@ class _HomeState extends State<Home> {
     setState(() {
       todosList = todos;
     });
+  }
+
+  Future<void> _loadTodayDate() async {
+    final now = DateTime.now();
+    todayDate =
+        "${now.day.toString().padLeft(2, '0')}.${now.month.toString().padLeft(2, '0')}.${now.year.toString()}";
   }
 
   @override
@@ -49,12 +59,23 @@ class _HomeState extends State<Home> {
                           top: 50,
                           bottom: 20,
                         ),
-                        child: const Text(
-                          'Your daily habits',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.w500,
-                          ),
+                        child: Column(
+                          children: [
+                            const Text(
+                              'Your daily habits',
+                              style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Text(
+                              'Today is $todayDate', // Display the formatted date
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       for (ToDo todo in todosList.reversed)
