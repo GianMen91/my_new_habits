@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newmehabits2/model/todo.dart';
+import 'package:newmehabits2/screens/statistic.dart';
 
 import '../constants/colors.dart';
 import '../widgets/todo_item.dart';
@@ -22,6 +23,7 @@ class _HomeState extends State<Home> {
   void initState() {
     _loadTodosFromDatabase();
     _loadTodayDate();
+    _resetCheckboxesIfNewDay();
     super.initState();
   }
 
@@ -40,8 +42,21 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      backgroundColor: tdBGColor,
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        actions: <Widget>[
+          IconButton(
+              icon: const Icon(Icons.person),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const StatisticsPage()),
+                );
+              }),
+        ],
+      ),
       body: Stack(
         children: [
           Container(
@@ -104,4 +119,18 @@ class _HomeState extends State<Home> {
   void _handleStartActivity(int id) async {
     //go to the related screen
   }
+
+  void _resetCheckboxesIfNewDay() async {
+    final todos = await DatabaseHelper.instance.getTodos();
+    final now = DateTime.now();
+    for (ToDo todo in todos) {
+      final todoDate = DateTime.parse(todo.recordDate);
+      if (todoDate.isBefore(DateTime(now.year, now.month, now.day))) {
+        todo.isDone = false;
+        await DatabaseHelper.instance.updateTodoStatus(todo);
+      }
+    }
+    _loadTodosFromDatabase();
+  }
+
 }
