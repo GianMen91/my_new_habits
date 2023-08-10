@@ -33,20 +33,23 @@ class DatabaseHelper {
     CREATE TABLE todos (
       id INTEGER PRIMARY KEY,
       todoText TEXT NOT NULL,
-      isDone INTEGER NOT NULL
+      isDone INTEGER NOT NULL,
+      recordDate DATE NOT NULL
     )
   ''');
+
+    final now = DateTime.now();
     await db.execute('''
-    INSERT INTO todos (id, todoText, isDone)
+    INSERT INTO todos (id, todoText, isDone, recordDate)
     VALUES
-      (1, 'Waking up early', 0),
-      (2, 'Journaling before bed', 0),
-      (3, 'Learning an online skill', 0),
-      (4, 'Exercising', 0),
-      (5, 'Creating a proper sleep schedule', 0),
-      (6, 'Taking a 30-minute walk in nature', 0),
-      (7, 'Reading 10 pages a day', 0),
-      (8, 'Limiting screen time', 0)
+      (1, 'Waking up early', 0, '${now.toIso8601String()}'),
+      (2, 'Journaling before bed', 0, '${now.toIso8601String()}'),
+      (3, 'Learning an online skill', 0, '${now.toIso8601String()}'),
+      (4, 'Exercising', 0, '${now.toIso8601String()}'),
+      (5, 'Creating a proper sleep schedule', 0, '${now.toIso8601String()}'),
+      (6, 'Taking a 30-minute walk in nature', 0, '${now.toIso8601String()}'),
+      (7, 'Reading 10 pages a day', 0, '${now.toIso8601String()}'),
+      (8, 'Limiting screen time', 0, '${now.toIso8601String()}')
   ''');
   }
 
@@ -59,16 +62,7 @@ class DatabaseHelper {
     });
   }
 
-  Future<void> insertTodo(ToDo todo) async {
-    final db = await database;
-    await db.insert(
-      'todos',
-      todo.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-  }
-
-  Future<void> updateTodoStatus(ToDo todo) async {
+  /*  Future<void> updateTodoStatus(ToDo todo) async {
     final db = await database;
     await db.update(
       'todos',
@@ -76,14 +70,19 @@ class DatabaseHelper {
       where: 'id = ?',
       whereArgs: [todo.id],
     );
-  }
+  }*/
 
-  Future<void> deleteTodoById(int id) async {
+  Future<void> updateTodoStatus(ToDo todo) async {
     final db = await database;
-    await db.delete(
+    final now = DateTime.now();
+    await db.update(
       'todos',
+      {
+        'isDone': todo.isDone ? 1 : 0,
+        'recordDate': now.toIso8601String(),
+      },
       where: 'id = ?',
-      whereArgs: [id],
+      whereArgs: [todo.id],
     );
   }
 }
