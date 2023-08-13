@@ -54,7 +54,7 @@ class StatisticBarState extends State<StatisticBar> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 const Text(
-                  'Goal achieved',
+                  'Goal achieved this week',
                   style: TextStyle(
                     color: Colors.lightBlue,
                     fontSize: 24,

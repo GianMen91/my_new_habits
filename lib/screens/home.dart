@@ -71,7 +71,7 @@ class _HomeState extends State<Home> {
                     children: [
                       Container(
                         margin: const EdgeInsets.only(
-                          top: 50,
+                          top: 20,
                           bottom: 20,
                         ),
                         child: Column(
@@ -79,15 +79,17 @@ class _HomeState extends State<Home> {
                             const Text(
                               'Your daily habits',
                               style: TextStyle(
+                                color: Colors.lightBlue,
                                 fontSize: 30,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                             Text(
                               'Today is $todayDate', // Display the formatted date
                               style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w400,
+                                color: Colors.lightBlue,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ],
