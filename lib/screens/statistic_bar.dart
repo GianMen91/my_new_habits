@@ -18,7 +18,7 @@ class StatisticBar extends StatefulWidget {
 
   final Color barBackgroundColor =
   Colors.grey.withOpacity(0.3);
-  final Color barColor = Colors.white;
+  final Color barColor = Colors.lightBlue;
   final Color touchedBarColor = Colors.yellow;
   final Color touchedBarColorDarker = const Color(0x165318FF);
 
@@ -36,7 +36,7 @@ class StatisticBarState extends State<StatisticBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:Colors.tealAccent,
+      //backgroundColor:Colors.tealAccent,
       appBar: AppBar(
         title: const Text('Statistics'),
         leading: IconButton(
@@ -56,7 +56,7 @@ class StatisticBarState extends State<StatisticBar> {
                 const Text(
                   'Goal achieved',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.lightBlue,
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
@@ -106,7 +106,7 @@ class StatisticBarState extends State<StatisticBar> {
           width: width,
           borderSide: isTouched
               ? BorderSide(color: widget.touchedBarColorDarker)
-              : const BorderSide(color: Colors.white, width: 0),
+              : const BorderSide(color: Colors.lightBlue, width: 0),
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
             toY: 20,
@@ -235,7 +235,7 @@ class StatisticBarState extends State<StatisticBar> {
 
   Widget getTitles(double value, TitleMeta meta) {
     const style = TextStyle(
-      color: Colors.white,
+      color: Colors.lightBlue,
       fontWeight: FontWeight.bold,
       fontSize: 14,
     );
