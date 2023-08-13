@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:newmehabits2/model/todo.dart';
 import 'package:newmehabits2/screens/statistic.dart';
 
-import '../constants/colors.dart';
 import '../widgets/todo_item.dart';
 import '../database_helper.dart';
 
