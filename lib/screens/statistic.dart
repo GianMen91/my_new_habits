@@ -27,22 +27,24 @@ class _StatisticsPageState extends State<StatisticsPage> {
         }
 
         final todos = snapshot.data!;
-        final now = DateTime.now();
+        var temp = DateTime.now().toUtc();
+        var d1 = DateTime.utc(temp.year,temp.month,temp.day);
 
         final completedGoalsToday = todos.where((todo) {
-          final todoDate = DateTime.parse(todo.recordDate);
-          return todo.isDone && todoDate.isAtSameMomentAs(now);
+          var utcRecordDate = DateTime.parse(todo.recordDate).toUtc();
+          var d2 = DateTime.utc(utcRecordDate.year,utcRecordDate.month,utcRecordDate.day);
+          return todo.isDone && d2.compareTo(d1)==0;
         }).length;
 
         final completedGoalsLastWeek = todos.where((todo) {
-          final lastWeekStart = now.subtract(const Duration(days: 7));
+          final lastWeekStart =  DateTime.now().subtract(const Duration(days: 7));
           final todoDate = DateTime.parse(todo.recordDate);
           return todo.isDone && todoDate.isAfter(lastWeekStart);
         }).length;
 
-        final List<FlSpot> chartData = [
+
+        List<FlSpot> chartData = [
           FlSpot(0, completedGoalsToday.toDouble()),
-          FlSpot(1, completedGoalsLastWeek.toDouble()),
         ];
 
         return Scaffold(
@@ -83,6 +85,9 @@ class _StatisticsPageState extends State<StatisticsPage> {
                       onTap: () {
                         setState(() {
                           _showTodayStats = false;
+                          chartData = [
+                            FlSpot(0, completedGoalsLastWeek.toDouble()),
+                          ];
                         });
                       },
                       child: Text(
@@ -110,10 +115,6 @@ class _StatisticsPageState extends State<StatisticsPage> {
                         BarChartGroupData(
                           x: 0,
                           barRods: [BarChartRodData(fromY: 0 , toY: chartData[0].y)],
-                        ),
-                        BarChartGroupData(
-                          x: 1,
-                          barRods: [BarChartRodData(fromY: 0 , toY: chartData[1].y)],
                         ),
                       ],
                     ),
