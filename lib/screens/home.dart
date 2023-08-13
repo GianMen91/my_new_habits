@@ -4,6 +4,7 @@ import 'package:newmehabits2/screens/statistic.dart';
 
 import '../widgets/todo_item.dart';
 import '../database_helper.dart';
+import 'statistic_bar.dart';
 
 
 class Home extends StatefulWidget {
@@ -51,7 +52,7 @@ class _HomeState extends State<Home> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const StatisticsPage()),
+                  MaterialPageRoute(builder: (context) =>  StatisticBar()),
                 );
               }),
         ],
