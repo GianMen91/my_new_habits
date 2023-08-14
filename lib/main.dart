@@ -22,7 +22,7 @@ class _MyAppState extends State {
   void initState() {
     super.initState();
     Future.delayed(
-        const Duration(seconds: 7),
+        const Duration(seconds: 3),
             () => Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const Home()),
@@ -37,7 +37,8 @@ class _MyAppState extends State {
         children: <Widget>[
           Expanded(
             child: Center(
-                child: Image.asset("assets/logo.png", fit: BoxFit.contain)),
+                child: Image.asset("assets/logo.png",  height: 200,
+                    width: 200, fit: BoxFit.contain)),
           ),
           const Align(
             alignment: Alignment.bottomCenter,
