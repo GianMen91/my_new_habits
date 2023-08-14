@@ -1,23 +1,13 @@
-import 'dart:async';
-import 'dart:math';
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:newmehabits2/todo.dart';
 
 class StatisticBar extends StatefulWidget {
-  StatisticBar({Key? key}) : super(key: key);
+  final List<ToDo> todos;
 
-  List<Color> get availableColors => const <Color>[
-    Colors.purple,
-    Colors.yellow,
-    Colors.blue,
-    Colors.orange,
-    Colors.pink,
-    Colors.red,
-  ];
+  StatisticBar({Key? key, required this.todos}) : super(key: key);
 
-  final Color barBackgroundColor =
-  Colors.grey.withOpacity(0.3);
+  final Color barBackgroundColor = Colors.grey.withOpacity(0.3);
   final Color barColor = Colors.lightBlue;
   final Color touchedBarColor = Colors.yellow;
   final Color touchedBarColorDarker = const Color(0x165318FF);
@@ -76,20 +66,19 @@ class StatisticBarState extends State<StatisticBar> {
               ],
             ),
           ),
-
         ],
       ),
     );
   }
 
   BarChartGroupData makeGroupData(
-      int x,
-      double y, {
-        bool isTouched = false,
-        Color? barColor,
-        double width = 22,
-        List<int> showTooltips = const [],
-      }) {
+    int x,
+    double y, {
+    bool isTouched = false,
+    Color? barColor,
+    double width = 22,
+    List<int> showTooltips = const [],
+  }) {
     barColor ??= widget.barColor;
     return BarChartGroupData(
       x: x,
@@ -112,26 +101,30 @@ class StatisticBarState extends State<StatisticBar> {
     );
   }
 
-  List<BarChartGroupData> showingGroups() => List.generate(7, (i) {
-    switch (i) {
-      case 0:
-        return makeGroupData(0, 5, isTouched: i == touchedIndex);
-      case 1:
-        return makeGroupData(1, 6.5, isTouched: i == touchedIndex);
-      case 2:
-        return makeGroupData(2, 5, isTouched: i == touchedIndex);
-      case 3:
-        return makeGroupData(3, 7.5, isTouched: i == touchedIndex);
-      case 4:
-        return makeGroupData(4, 9, isTouched: i == touchedIndex);
-      case 5:
-        return makeGroupData(5, 11.5, isTouched: i == touchedIndex);
-      case 6:
-        return makeGroupData(6, 6.5, isTouched: i == touchedIndex);
-      default:
-        return throw Error();
+  List<BarChartGroupData> showingGroups() {
+
+
+    // Initialize a list to hold completed todo counts for each day
+    var completedCounts = List<int>.filled(7, 0);
+
+    // Iterate through todos and count completed ones for each day
+    for (var todo in widget.todos) {
+      if (todo.isDone) {
+        var date = DateTime.parse(todo.recordDate);
+        var dayOfWeek = date.weekday - 1; // Adjust to match your indexing (0 to 6)
+        completedCounts[dayOfWeek]++;
+      }
     }
-  });
+
+    // Generate BarChartGroupData list based on completedCounts
+    var list = List.generate(7, (i) {
+      return makeGroupData(i, completedCounts[i].toDouble(), isTouched: i == touchedIndex);
+    });
+
+
+    return list;
+  }
+
 
   BarChartData mainBarData() {
     return BarChartData(
@@ -200,10 +193,10 @@ class StatisticBarState extends State<StatisticBar> {
       ),
       titlesData: FlTitlesData(
         show: true,
-        rightTitles:  AxisTitles(
+        rightTitles: AxisTitles(
           sideTitles: SideTitles(showTitles: false),
         ),
-        topTitles:  AxisTitles(
+        topTitles: AxisTitles(
           sideTitles: SideTitles(showTitles: false),
         ),
         bottomTitles: AxisTitles(
@@ -213,7 +206,7 @@ class StatisticBarState extends State<StatisticBar> {
             reservedSize: 38,
           ),
         ),
-        leftTitles:  AxisTitles(
+        leftTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: false,
           ),
@@ -223,7 +216,7 @@ class StatisticBarState extends State<StatisticBar> {
         show: false,
       ),
       barGroups: showingGroups(),
-      gridData:  FlGridData(show: false),
+      gridData: FlGridData(show: false),
     );
   }
 
