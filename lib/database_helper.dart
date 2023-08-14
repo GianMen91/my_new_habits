@@ -46,7 +46,6 @@ class DatabaseHelper {
       )
     ''');
 
-
     final now = DateTime.now();
     await db.execute('''
     INSERT INTO todos (id, todoText, isDone, recordDate)
@@ -87,7 +86,10 @@ class DatabaseHelper {
     final maps = await db.query(
       'todo_history',
       where: 'changeDate >= ? AND changeDate < ?',
-      whereArgs: [date.toIso8601String(), date.add(Duration(days: 1)).toIso8601String()],
+      whereArgs: [
+        date.toIso8601String(),
+        date.add(Duration(days: 1)).toIso8601String()
+      ],
     );
 
     return List.generate(maps.length, (index) {
@@ -111,7 +113,7 @@ class DatabaseHelper {
     );
 
     // Insert a new history record
-    if(todo.isDone){
+    if (todo.isDone) {
       await db.insert(
         'todo_history',
         {
@@ -119,7 +121,15 @@ class DatabaseHelper {
           'changeDate': now.toIso8601String(),
         },
       );
+    } else {
+      // Delete history records for the same day (ignoring time)
+      var normalizedNow =
+          now.toIso8601String().split('T')[0]; // Extract the date portion
+      await db.delete(
+        'todo_history',
+        where: 'id = ? AND DATE(changeDate) = ?',
+        whereArgs: [todo.id, normalizedNow],
+      );
     }
   }
-
 }
