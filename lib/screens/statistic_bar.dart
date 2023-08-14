@@ -62,18 +62,12 @@ class StatisticBarState extends State<StatisticBar> {
                   ),
                 ),
                 const SizedBox(
-                  height: 4,
-                ),
-                const SizedBox(
                   height: 38,
                 ),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: BarChart(
-                      isPlaying ? randomData() : mainBarData(),
-                      swapAnimationDuration: animDuration,
-                    ),
+                    child: BarChart(mainBarData()),
                   ),
                 ),
                 const SizedBox(
@@ -271,107 +265,5 @@ class StatisticBarState extends State<StatisticBar> {
       space: 16,
       child: text,
     );
-  }
-
-  BarChartData randomData() {
-    return BarChartData(
-      barTouchData: BarTouchData(
-        enabled: false,
-      ),
-      titlesData: FlTitlesData(
-        show: true,
-        bottomTitles: AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: true,
-            getTitlesWidget: getTitles,
-            reservedSize: 38,
-          ),
-        ),
-        leftTitles:  AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: false,
-          ),
-        ),
-        topTitles:  AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: false,
-          ),
-        ),
-        rightTitles:  AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: false,
-          ),
-        ),
-      ),
-      borderData: FlBorderData(
-        show: false,
-      ),
-      barGroups: List.generate(7, (i) {
-        switch (i) {
-          case 0:
-            return makeGroupData(
-              0,
-              Random().nextInt(15).toDouble() + 6,
-              barColor: widget.availableColors[
-              Random().nextInt(widget.availableColors.length)],
-            );
-          case 1:
-            return makeGroupData(
-              1,
-              Random().nextInt(15).toDouble() + 6,
-              barColor: widget.availableColors[
-              Random().nextInt(widget.availableColors.length)],
-            );
-          case 2:
-            return makeGroupData(
-              2,
-              Random().nextInt(15).toDouble() + 6,
-              barColor: widget.availableColors[
-              Random().nextInt(widget.availableColors.length)],
-            );
-          case 3:
-            return makeGroupData(
-              3,
-              Random().nextInt(15).toDouble() + 6,
-              barColor: widget.availableColors[
-              Random().nextInt(widget.availableColors.length)],
-            );
-          case 4:
-            return makeGroupData(
-              4,
-              Random().nextInt(15).toDouble() + 6,
-              barColor: widget.availableColors[
-              Random().nextInt(widget.availableColors.length)],
-            );
-          case 5:
-            return makeGroupData(
-              5,
-              Random().nextInt(15).toDouble() + 6,
-              barColor: widget.availableColors[
-              Random().nextInt(widget.availableColors.length)],
-            );
-          case 6:
-            return makeGroupData(
-              6,
-              Random().nextInt(15).toDouble() + 6,
-              barColor: widget.availableColors[
-              Random().nextInt(widget.availableColors.length)],
-            );
-          default:
-            return throw Error();
-        }
-      }),
-      gridData:  FlGridData(show: false),
-    );
-  }
-
-  Future<dynamic> refreshState() async {
-    setState(() {});
-    await Future<dynamic>.delayed(
-      animDuration + const Duration(milliseconds: 50),
-    );
-    if (isPlaying) {
-      await refreshState();
-    }
   }
 }
