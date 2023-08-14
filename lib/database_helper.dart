@@ -50,15 +50,23 @@ class DatabaseHelper {
     await db.execute('''
     INSERT INTO todos (id, todoText, isDone, recordDate)
     VALUES
-      (1, 'Waking up early', 0, '${now.toIso8601String()}'),
-      (2, 'Journaling before bed', 0, '${now.toIso8601String()}'),
-      (3, 'Spend 30 minutes learning an online skill', 0, '${now.toIso8601String()}'),
-      (4, 'Spend 1 hour a day exercising', 0, '${now.toIso8601String()}'),
-      (5, 'Sit in silence for 10 minute', 0, '${now.toIso8601String()}'),
-      (6, 'Creating a proper sleep schedule', 0, '${now.toIso8601String()}'),
-      (7, 'Take a 30-minute walk in nature', 0, '${now.toIso8601String()}'),
+      (1, 'Wake up early', 0, '${now.toIso8601String()}'),
+      (2, 'Journal before bed', 0, '${now.toIso8601String()}'),
+      (3, 'Learning a new skill', 0, '${now.toIso8601String()}'),
+      (4, 'Make exercises', 0, '${now.toIso8601String()}'),
+      (5, 'Meditate', 0, '${now.toIso8601String()}'),
+      (6, 'Create a proper sleep schedule', 0, '${now.toIso8601String()}'),
+      (7, 'Take a 30-minute walk', 0, '${now.toIso8601String()}'),
       (8, 'Read 10 pages a day', 0, '${now.toIso8601String()}'),
-      (9, 'Limiting screen time', 0, '${now.toIso8601String()}')
+      (9, 'Limit screen time', 0, '${now.toIso8601String()}'),
+      (10, 'Drink 2lt water', 0, '${now.toIso8601String()}'),
+      (11, 'Limit Caffeine Intake', 0, '${now.toIso8601String()}'),
+      (12, 'Practice Positive Self-Talk', 0, '${now.toIso8601String()}'),
+      (13, 'Practice Gratitude', 0, '${now.toIso8601String()}'),
+      (14, 'Eat healthily', 0, '${now.toIso8601String()}'),
+      (15, 'Do Stretching', 0, '${now.toIso8601String()}'),
+      (16, 'Dedicate Time to Your Hobby', 0, '${now.toIso8601String()}'),
+      (17, 'Practice Yoga', 0, '${now.toIso8601String()}')
   ''');
   }
 

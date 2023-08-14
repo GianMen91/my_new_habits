@@ -55,7 +55,7 @@ class ToDoItem extends StatelessWidget {
             iconSize: 18,
             icon: const Icon(Icons.info_outline),
             onPressed: () {
-              _dialogBuilder(context, todo.id);
+              _dialogBuilder(context, todo);
             },
           ),
         ),
@@ -82,13 +82,13 @@ class ToDoItem extends StatelessWidget {
     );
   }
 
-  Future<void> _dialogBuilder(BuildContext context, int id) {
+  Future<void> _dialogBuilder(BuildContext context, ToDo todo) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Details'),
-          content: Text(details[id-1]),
+          title: Text(todo.todoText),
+          content: Text(details[todo.id-1]),
           actions: <Widget>[
             TextButton(
               child: const Text('Close'),

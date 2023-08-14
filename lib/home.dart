@@ -50,12 +50,20 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.blue,
         actions: <Widget>[
           IconButton(
-              icon: const Icon(Icons.person),
+              icon: const Icon(Icons.bar_chart),
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) =>  StatisticBar(toDoHistory: toDoHistory)),
                 );
+              }),
+          IconButton(
+              icon: const Icon(Icons.settings),
+              onPressed: () {
+                /*Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>  StatisticBar(toDoHistory: toDoHistory)),
+                );*/
               }),
         ],
       ),
@@ -79,7 +87,7 @@ class _HomeState extends State<Home> {
                         child: Column(
                           children: [
                             const Text(
-                              'Your daily habits',
+                              'Your daily good habits',
                               style: TextStyle(
                                 color: Colors.lightBlue,
                                 fontSize: 30,
