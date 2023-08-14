@@ -17,7 +17,7 @@ class ToDoHistory {
   static ToDoHistory fromMap(Map<String, dynamic> map) {
     return ToDoHistory(
       id: map['id'],
-      changeDate: map['recordDate'],
+      changeDate: map['changeDate'],
     );
   }
 }
