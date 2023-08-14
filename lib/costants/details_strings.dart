@@ -1,4 +1,3 @@
-
 const List<String> details = [
   'Waking up at 5 am provides a head start and allows for activities such as: \n\n• exercise\n• planning\n• being productive\n• working on business.\n\nThese activities can lead to a greater goal achievement.',
   'Writing down thoughts such as:  \n\n• tomorrow\'s goal\n• expression of gratitude\n• reflection on negative thoughts\n• working on business.\n\nThese can enhance sleep quality and contributes to improved mental well-being',
