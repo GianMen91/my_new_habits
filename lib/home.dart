@@ -93,7 +93,7 @@ class _HomeState extends State<Home> {
                           ],
                         ),
                       ),
-                      for (ToDo todo in todosList.reversed)
+                      for (ToDo todo in todosList)
                         ToDoItem(
                           todo: todo,
                           onToDoChanged: _handleToDoChange,

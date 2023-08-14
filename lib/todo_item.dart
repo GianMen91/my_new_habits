@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'costants/details_strings.dart';
 import 'todo.dart';
 
 class ToDoItem extends StatelessWidget {
@@ -40,6 +41,24 @@ class ToDoItem extends StatelessWidget {
             decoration: todo.isDone ? TextDecoration.lineThrough : null,
           ),
         ),
+        trailing: Container(
+          padding: const EdgeInsets.all(0),
+          margin: const EdgeInsets.symmetric(vertical: 12),
+          height: 35,
+          width: 35,
+          decoration: BoxDecoration(
+            color: Colors.lightBlue,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: IconButton(
+            color: Colors.white,
+            iconSize: 18,
+            icon: const Icon(Icons.info_outline),
+            onPressed: () {
+              _dialogBuilder(context, todo.id);
+            },
+          ),
+        ),
         /*trailing: Container(
           padding: const EdgeInsets.all(0),
           margin: const EdgeInsets.symmetric(vertical: 12),
@@ -60,6 +79,26 @@ class ToDoItem extends StatelessWidget {
           ),
         ),*/
       ),
+    );
+  }
+
+  Future<void> _dialogBuilder(BuildContext context, int id) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Details'),
+          content: Text(details[id-1]),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

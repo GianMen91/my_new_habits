@@ -44,12 +44,13 @@ class DatabaseHelper {
     VALUES
       (1, 'Waking up early', 0, '${now.toIso8601String()}'),
       (2, 'Journaling before bed', 0, '${now.toIso8601String()}'),
-      (3, 'Learning an online skill', 0, '${now.toIso8601String()}'),
-      (4, 'Exercising', 0, '${now.toIso8601String()}'),
-      (5, 'Creating a proper sleep schedule', 0, '${now.toIso8601String()}'),
-      (6, 'Taking a 30-minute walk in nature', 0, '${now.toIso8601String()}'),
-      (7, 'Reading 10 pages a day', 0, '${now.toIso8601String()}'),
-      (8, 'Limiting screen time', 0, '${now.toIso8601String()}')
+      (3, 'Spend 30 minutes learning an online skill', 0, '${now.toIso8601String()}'),
+      (4, 'Spend 1 hour a day exercising', 0, '${now.toIso8601String()}'),
+      (5, 'Sit in silence for 10 minute', 0, '${now.toIso8601String()}'),
+      (6, 'Creating a proper sleep schedule', 0, '${now.toIso8601String()}'),
+      (7, 'Take a 30-minute walk in nature', 0, '${now.toIso8601String()}'),
+      (8, 'Read 10 pages a day', 0, '${now.toIso8601String()}'),
+      (9, 'Limiting screen time', 0, '${now.toIso8601String()}')
   ''');
   }
 
