@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newmehabits2/todo_history.dart';
 import 'todo.dart';
 import 'todo_item.dart';
 import 'database_helper.dart';
@@ -14,6 +15,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<ToDo> todosList = [];
+  List<ToDoHistory> toDoHistory = [];
   String todayDate = '';
 
 
@@ -27,8 +29,10 @@ class _HomeState extends State<Home> {
 
   Future<void> _loadTodosFromDatabase() async {
     final todos = await DatabaseHelper.instance.getTodos();
+    final todoHistory = await DatabaseHelper.instance.getToDoHistory();
     setState(() {
       todosList = todos;
+      toDoHistory = todoHistory;
     });
   }
 
@@ -50,7 +54,7 @@ class _HomeState extends State<Home> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  StatisticBar(todos: todosList)),
+                  MaterialPageRoute(builder: (context) =>  StatisticBar(toDoHistory: toDoHistory)),
                 );
               }),
         ],

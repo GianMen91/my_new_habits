@@ -1,11 +1,12 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:newmehabits2/todo.dart';
+import 'package:newmehabits2/todo_history.dart';
 
 class StatisticBar extends StatefulWidget {
-  final List<ToDo> todos;
+  final List<ToDoHistory> toDoHistory;
 
-  StatisticBar({Key? key, required this.todos}) : super(key: key);
+  StatisticBar({Key? key, required this.toDoHistory}) : super(key: key);
 
   final Color barBackgroundColor = Colors.grey.withOpacity(0.3);
   final Color barColor = Colors.lightBlue;
@@ -102,29 +103,44 @@ class StatisticBarState extends State<StatisticBar> {
   }
 
   List<BarChartGroupData> showingGroups() {
-
-
     // Initialize a list to hold completed todo counts for each day
     var completedCounts = List<int>.filled(7, 0);
 
-    // Iterate through todos and count completed ones for each day
-    for (var todo in widget.todos) {
-      if (todo.isDone) {
-        var date = DateTime.parse(todo.recordDate);
-        var dayOfWeek = date.weekday - 1; // Adjust to match your indexing (0 to 6)
-        completedCounts[dayOfWeek]++;
+    // Calculate the start and end dates for the past week (Monday to Sunday)
+    final now = DateTime.now();
+    final today = now.weekday;
+    final lastMonday =
+        now.subtract(Duration(days: today - 1 + (today == 7 ? 6 : 0)));
+    final nextSunday = lastMonday.add(const Duration(days: 6));
+
+    // Iterate through todos history and calculate completed tasks for each day of the past week
+    for (var day = lastMonday;
+        day.isBefore(nextSunday.add(const Duration(days: 1)));
+        day = day.add(const Duration(days: 1))) {
+      var uniqueIds = <int>{};
+
+      for (var todo in widget.toDoHistory) {
+        var todoDate = DateTime.parse(todo.changeDate);
+        var normalizedTodoDate =
+            DateTime(todoDate.year, todoDate.month, todoDate.day);
+        var normalizedDay = DateTime(day.year, day.month, day.day);
+
+        if (normalizedTodoDate == normalizedDay) {
+          uniqueIds.add(todo.id);
+        }
       }
+
+      completedCounts[day.weekday - 1] = uniqueIds.length;
     }
 
     // Generate BarChartGroupData list based on completedCounts
     var list = List.generate(7, (i) {
-      return makeGroupData(i, completedCounts[i].toDouble(), isTouched: i == touchedIndex);
+      return makeGroupData(i, completedCounts[i].toDouble(),
+          isTouched: i == touchedIndex);
     });
-
 
     return list;
   }
-
 
   BarChartData mainBarData() {
     return BarChartData(

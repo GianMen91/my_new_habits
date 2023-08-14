@@ -1,3 +1,4 @@
+import 'package:newmehabits2/todo_history.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'todo.dart';
@@ -38,6 +39,14 @@ class DatabaseHelper {
     )
   ''');
 
+    await db.execute('''
+      CREATE TABLE todo_history (
+        id INTEGER,
+        changeDate DATE
+      )
+    ''');
+
+
     final now = DateTime.now();
     await db.execute('''
     INSERT INTO todos (id, todoText, isDone, recordDate)
@@ -63,19 +72,34 @@ class DatabaseHelper {
     });
   }
 
-  /*  Future<void> updateTodoStatus(ToDo todo) async {
+  Future<List<ToDoHistory>> getToDoHistory() async {
     final db = await database;
-    await db.update(
-      'todos',
-      todo.toMap(),
-      where: 'id = ?',
-      whereArgs: [todo.id],
+    final maps = await db.query('todo_history');
+
+    return List.generate(maps.length, (index) {
+      return ToDoHistory.fromMap(maps[index]);
+    });
+  }
+
+  Future<List<ToDoHistory>> getToDoHistoryForDate(DateTime date) async {
+    final db = await database;
+
+    final maps = await db.query(
+      'todo_history',
+      where: 'changeDate >= ? AND changeDate < ?',
+      whereArgs: [date.toIso8601String(), date.add(Duration(days: 1)).toIso8601String()],
     );
-  }*/
+
+    return List.generate(maps.length, (index) {
+      return ToDoHistory.fromMap(maps[index]);
+    });
+  }
 
   Future<void> updateTodoStatus(ToDo todo) async {
     final db = await database;
     final now = DateTime.now();
+
+    // Update the current status in the main todos table
     await db.update(
       'todos',
       {
@@ -85,5 +109,17 @@ class DatabaseHelper {
       where: 'id = ?',
       whereArgs: [todo.id],
     );
+
+    // Insert a new history record
+    if(todo.isDone){
+      await db.insert(
+        'todo_history',
+        {
+          'id': todo.id,
+          'changeDate': now.toIso8601String(),
+        },
+      );
+    }
   }
+
 }
