@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../model/todo.dart';
-import '../constants/colors.dart';
+import 'todo.dart';
 
 class ToDoItem extends StatelessWidget {
   final ToDo todo;
@@ -37,7 +36,7 @@ class ToDoItem extends StatelessWidget {
           todo.todoText,
           style: TextStyle(
             fontSize: 16,
-            color: tdBlack,
+            color: Colors.black,
             decoration: todo.isDone ? TextDecoration.lineThrough : null,
           ),
         ),

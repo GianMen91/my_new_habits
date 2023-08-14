@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:newmehabits2/model/todo.dart';
+import 'package:newmehabits2/todo.dart';
 import '../database_helper.dart';
 import 'package:fl_chart/fl_chart.dart';
 

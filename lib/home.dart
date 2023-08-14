@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:newmehabits2/model/todo.dart';
-import 'package:newmehabits2/screens/statistic.dart';
-
-import '../widgets/todo_item.dart';
-import '../database_helper.dart';
+import 'todo.dart';
+import 'todo_item.dart';
+import 'database_helper.dart';
 import 'statistic_bar.dart';
 
 

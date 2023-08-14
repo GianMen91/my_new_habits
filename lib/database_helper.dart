@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'model/todo.dart';
+import 'todo.dart';
 import 'package:flutter/cupertino.dart';
 
 class DatabaseHelper {
