@@ -3,6 +3,8 @@ import 'home.dart';
 
 void main() {
   runApp(const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      //title: 'App Titile',
       home: MyApp(),
   ));
 }
