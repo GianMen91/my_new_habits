@@ -1,13 +1,11 @@
 const List<String> details = [
-  'Waking up at 5 am provides a head start and allows for activities such as: \n\n• exercise\n• planning\n• being productive\n• working on business.\n\nThese activities can lead to a greater goal achievement.',
-  'Writing down thoughts such as:  \n\n• tomorrow\'s goal\n• expression of gratitude\n• reflection on negative thoughts\n• working on business.\n\nThese can enhance sleep quality and contributes to improved mental well-being',
-  'Learning  an online skill 30 minutes a day! With inflations and taxes on the rise, developing an online skill can be a game-changer for you.  \n\n• coding\n• youtube\n• copywriting\n• digital marketing\n• content creation',
-  'Three excercise that yield the best results are \n\n• running\n• swimming\n• lifting weights\n\nThese excercise wil lquickly strengthen and tone your body',
-  'Carvin out time for stillness and mindfulness allow your mind to: \n\n• take a break\n• promote mental clarity\n• be present at the moment\n• reduce stress level',
-  'Sleep is essential for you, as it affects:\n\n• Performance\n• Mental health\n• Reducing stress\n• Improving your mood\n\nDo this for deep and quality sleep:\n\n• Avoid screens for 2 hours before bed\n• Avoid eating for 2 hours before bed\n• Keep your room cooler\n• Use blackout curtains',
-  'Nature is proven to help you:\n\n• Get rid of anxiety\n• Increase happiness\n• Improve your mood\n\nIt\'s one of the best hacks for improving your day.',
-  'Reading will strengthen your mind and also:\n\n• Increase your focus\n• Increase your knowledge\n• Increase your self-confidence\n\nJust 10 pages a day will give you a huge return in life.',
-  'Saying NO to screen time means saying YES to something else.\nImagine all the time you have spent on the phone being put to better use.\n\n1. Track and measure your screen time.\n2. Set a screen limit or use a timer.\n3. Turn off notifications.\n4. Go grayscale.'
+'Rise and shine at 5 am to seize the day\'s potential and make room for enriching activities like:\n\n• exercise\n• planning\n• productivity\n• business development.\n\nThese endeavors pave the way for accomplishing greater goals.',
+'Write down reflections such as:\n\n• tomorrow\'s aspirations\n• expressions of gratitude\n• contemplation of challenges\n• progress in business.\n\nThese practices can enhance sleep quality and contribute to enhanced mental well-being.',
+'Dedicate just 30 minutes a day to learning an online skill! With inflation and taxes on the rise, mastering an online skill can be a transformative move for you.\n\n• coding\n• content creation\n• digital marketing\n• copywriting\n• YouTube',
+'Unveil the best versions of yourself through these impactful exercises:\n\n• running\n• swimming\n• weightlifting\n\nIncorporating these exercises will swiftly fortify and sculpt your body.',
+'Grant yourself the gift of stillness and mindfulness to:\n\n• pause and reset\n• enhance mental clarity\n• embrace the present moment\n• diminish stress.\n\nPrioritizing moments of calm contributes to a more balanced mindset.',
+'Cherish sleep as an essential ally, influencing:\n\n• performance\n• mental well-being\n• stress reduction\n• mood enhancement.\n\nFoster deep and restorative sleep by:\n\n• disconnecting from screens two hours before bedtime\n• refraining from eating two hours before sleep\n• maintaining a cooler sleeping environment\n• utilizing blackout curtains.',
+'Nature stands validated as a remedy to:\n\n• dissolve anxiety\n• amplify happiness\n• elevate mood.\n\nEmbrace the outdoors as one of the finest methods to elevate your day.',
+'Empower your mind through reading, which simultaneously:\n\n• hones your focus\n• enriches your knowledge\n• bolsters your self-assurance.\n\nCommit to just 10 pages a day for substantial life-long returns.',
+'When you say NO to screen time, you unequivocally say YES to something greater.\nEnvision channeling the time spent on your phone into more meaningful pursuits.\n\n1. Monitor and assess your screen time.\n2. Impose limits or employ timers.\n3. Silence notifications.\n4. Embrace grayscale mode.'
 ];
-
-
