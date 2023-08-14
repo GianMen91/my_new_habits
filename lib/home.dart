@@ -50,7 +50,7 @@ class _HomeState extends State<Home> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  StatisticBar()),
+                  MaterialPageRoute(builder: (context) =>  StatisticBar(todos: todosList)),
                 );
               }),
         ],
