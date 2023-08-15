@@ -60,6 +60,24 @@ class _SettingsState extends State<Settings> {
                 Expanded(
                   child: ListView(
                     children: [
+                      Container(
+                        margin: const EdgeInsets.only(
+                          top: 20,
+                          bottom: 20,
+                        ),
+                        child: Column(
+                          children: const [
+                            Text(
+                              'Choose the habits you want to follow and click on the save button to save the changes',
+                              /*style: TextStyle(
+                                color: Colors.lightBlue,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),*/
+                            ),
+                          ],
+                        ),
+                      ),
                       for (ToDo todo in todosList)
                         Container(
                           margin: const EdgeInsets.only(bottom: 5),
