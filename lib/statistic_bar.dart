@@ -1,12 +1,16 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:newmehabits2/todo.dart';
 import 'package:newmehabits2/todo_history.dart';
 
 class StatisticBar extends StatefulWidget {
-  final List<ToDoHistory> toDoHistory;
+  StatisticBar(
+      {Key? key,
+      required this.toDoHistory,
+      required this.favouriteHabitsListSize})
+      : super(key: key);
 
-  StatisticBar({Key? key, required this.toDoHistory}) : super(key: key);
+  final List<ToDoHistory> toDoHistory;
+  final int favouriteHabitsListSize;
 
   final Color barBackgroundColor = Colors.grey.withOpacity(0.3);
   final Color barColor = Colors.lightBlue;
@@ -93,7 +97,7 @@ class StatisticBarState extends State<StatisticBar> {
               : const BorderSide(color: Colors.lightBlue, width: 0),
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            toY: 20,
+            toY: widget.favouriteHabitsListSize.toDouble(),
             color: widget.barBackgroundColor,
           ),
         ),
@@ -184,7 +188,7 @@ class StatisticBarState extends State<StatisticBar> {
               ),
               children: <TextSpan>[
                 TextSpan(
-                  text: (rod.toY - 1).toString(),
+                  text: (rod.toY - 1).toString()+" / "+widget.favouriteHabitsListSize.toDouble().toString(),
                   style: TextStyle(
                     color: widget.touchedBarColor,
                     fontSize: 16,

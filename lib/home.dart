@@ -57,7 +57,7 @@ class _HomeState extends State<Home> {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          StatisticBar(toDoHistory: toDoHistory)),
+                          StatisticBar(toDoHistory: toDoHistory, favouriteHabitsListSize:favouriteHabitsList.length)),
                 );
               }),
           IconButton(
