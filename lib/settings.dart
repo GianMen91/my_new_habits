@@ -40,7 +40,7 @@ class _SettingsState extends State<Settings> {
           IconButton(
               icon: const Icon(Icons.save),
               onPressed: () async {
-                for (ToDo todo in todosList){
+                for (ToDo todo in todosList) {
                   await DatabaseHelper.instance.updateFavouriteStatus(todo);
                 }
               }),

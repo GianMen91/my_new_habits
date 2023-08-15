@@ -88,7 +88,7 @@ class ToDoItem extends StatelessWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(todo.todoText),
-          content: Text(details[todo.id-1]),
+          content: Text(details[todo.id - 1]),
           actions: <Widget>[
             TextButton(
               child: const Text('Close'),

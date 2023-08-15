@@ -118,7 +118,6 @@ class DatabaseHelper {
       where: 'id = ?',
       whereArgs: [todo.id],
     );
-
   }
 
   Future<void> updateTodoStatus(ToDo todo) async {

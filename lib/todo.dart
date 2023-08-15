@@ -27,7 +27,8 @@ class ToDo {
     return ToDo(
       id: map['id'],
       todoText: map['todoText'],
-      isDone: map['isDone'] == 1, // Convert the int value to bool
+      isDone: map['isDone'] == 1,
+      // Convert the int value to bool
       isFavourite: map['isFavourite'] == 1,
       recordDate: map['recordDate'],
     );

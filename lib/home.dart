@@ -6,7 +6,6 @@ import 'todo_item.dart';
 import 'database_helper.dart';
 import 'statistic_bar.dart';
 
-
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -18,7 +17,6 @@ class _HomeState extends State<Home> {
   List<ToDo> todosList = [];
   List<ToDoHistory> toDoHistory = [];
   String todayDate = '';
-
 
   @override
   void initState() {
@@ -45,9 +43,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-
     List<ToDo> favouriteHabitsList =
-    todosList.where((habit) => habit.isFavourite).toList();
+        todosList.where((habit) => habit.isFavourite).toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -58,7 +55,9 @@ class _HomeState extends State<Home> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  StatisticBar(toDoHistory: toDoHistory)),
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          StatisticBar(toDoHistory: toDoHistory)),
                 );
               }),
           IconButton(
@@ -66,7 +65,7 @@ class _HomeState extends State<Home> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  const Settings()),
+                  MaterialPageRoute(builder: (context) => const Settings()),
                 );
               }),
         ],
@@ -99,7 +98,8 @@ class _HomeState extends State<Home> {
                               ),
                             ),
                             Text(
-                              'Today is $todayDate', // Display the formatted date
+                              'Today is $todayDate',
+                              // Display the formatted date
                               style: const TextStyle(
                                 color: Colors.lightBlue,
                                 fontSize: 18,
@@ -148,5 +148,4 @@ class _HomeState extends State<Home> {
     }
     _loadTodosFromDatabase();
   }
-
 }
