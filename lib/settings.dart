@@ -3,7 +3,8 @@ import 'todo.dart';
 import 'database_helper.dart';
 
 class Settings extends StatefulWidget {
-  const Settings({Key? key}) : super(key: key);
+  final onFavouriteChange;
+  const Settings({Key? key,  required this.onFavouriteChange}) : super(key: key);
 
   @override
   State<Settings> createState() => _SettingsState();
@@ -34,6 +35,7 @@ class _SettingsState extends State<Settings> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
+            widget.onFavouriteChange();
           },
         ),
         actions: <Widget>[
