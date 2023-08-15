@@ -35,6 +35,7 @@ class DatabaseHelper {
       id INTEGER PRIMARY KEY,
       todoText TEXT NOT NULL,
       isDone INTEGER NOT NULL,
+      isFavourite INTEGER NOT NULL,
       recordDate DATE NOT NULL
     )
   ''');
@@ -48,25 +49,25 @@ class DatabaseHelper {
 
     final now = DateTime.now();
     await db.execute('''
-    INSERT INTO todos (id, todoText, isDone, recordDate)
+    INSERT INTO todos (id, todoText, isDone, isFavourite, recordDate)
     VALUES
-      (1, 'Wake up early', 0, '${now.toIso8601String()}'),
-      (2, 'Journal before bed', 0, '${now.toIso8601String()}'),
-      (3, 'Learning a new skill', 0, '${now.toIso8601String()}'),
-      (4, 'Make exercises', 0, '${now.toIso8601String()}'),
-      (5, 'Meditate', 0, '${now.toIso8601String()}'),
-      (6, 'Create a proper sleep schedule', 0, '${now.toIso8601String()}'),
-      (7, 'Take a 30-minute walk', 0, '${now.toIso8601String()}'),
-      (8, 'Read 10 pages a day', 0, '${now.toIso8601String()}'),
-      (9, 'Limit screen time', 0, '${now.toIso8601String()}'),
-      (10, 'Drink 2lt water', 0, '${now.toIso8601String()}'),
-      (11, 'Limit Caffeine Intake', 0, '${now.toIso8601String()}'),
-      (12, 'Practice Positive Self-Talk', 0, '${now.toIso8601String()}'),
-      (13, 'Practice Gratitude', 0, '${now.toIso8601String()}'),
-      (14, 'Eat healthily', 0, '${now.toIso8601String()}'),
-      (15, 'Do Stretching', 0, '${now.toIso8601String()}'),
-      (16, 'Dedicate Time to Your Hobby', 0, '${now.toIso8601String()}'),
-      (17, 'Practice Yoga', 0, '${now.toIso8601String()}')
+      (1, 'Wake up early', 0, 0,'${now.toIso8601String()}'),
+      (2, 'Journal before bed', 0, 0,'${now.toIso8601String()}'),
+      (3, 'Learning a new skill', 0, 1,'${now.toIso8601String()}'),
+      (4, 'Make exercises', 0, 0,'${now.toIso8601String()}'),
+      (5, 'Meditate', 0, 0,'${now.toIso8601String()}'),
+      (6, 'Create a proper sleep schedule', 0, 1,'${now.toIso8601String()}'),
+      (7, 'Take a 30-minute walk', 0, 1,'${now.toIso8601String()}'),
+      (8, 'Read 10 pages a day', 0, 1,'${now.toIso8601String()}'),
+      (9, 'Limit screen time', 0, 1,'${now.toIso8601String()}'),
+      (10, 'Drink 2lt water', 0, 1,'${now.toIso8601String()}'),
+      (11, 'Limit Caffeine Intake', 0, 0,'${now.toIso8601String()}'),
+      (12, 'Practice Positive Self-Talk', 0, 0,'${now.toIso8601String()}'),
+      (13, 'Practice Gratitude', 0, 0,'${now.toIso8601String()}'),
+      (14, 'Eat healthily', 0, 1,'${now.toIso8601String()}'),
+      (15, 'Do Stretching', 0, 0,'${now.toIso8601String()}'),
+      (16, 'Dedicate Time to Your Hobby', 0, 1,'${now.toIso8601String()}'),
+      (17, 'Practice Yoga', 0, 0,'${now.toIso8601String()}')
   ''');
   }
 
@@ -103,6 +104,21 @@ class DatabaseHelper {
     return List.generate(maps.length, (index) {
       return ToDoHistory.fromMap(maps[index]);
     });
+  }
+
+  Future<void> updateFavouriteStatus(ToDo todo) async {
+    final db = await database;
+
+    // Update the current status in the main todos table
+    await db.update(
+      'todos',
+      {
+        'isFavourite': todo.isFavourite ? 1 : 0,
+      },
+      where: 'id = ?',
+      whereArgs: [todo.id],
+    );
+
   }
 
   Future<void> updateTodoStatus(ToDo todo) async {

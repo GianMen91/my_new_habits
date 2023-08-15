@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newmehabits2/settings.dart';
 import 'package:newmehabits2/todo_history.dart';
 import 'todo.dart';
 import 'todo_item.dart';
@@ -45,6 +46,9 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
 
+    List<ToDo> favouriteHabitsList =
+    todosList.where((habit) => habit.isFavourite).toList();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -60,10 +64,10 @@ class _HomeState extends State<Home> {
           IconButton(
               icon: const Icon(Icons.settings),
               onPressed: () {
-                /*Navigator.push(
+                Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  StatisticBar(toDoHistory: toDoHistory)),
-                );*/
+                  MaterialPageRoute(builder: (context) =>  const Settings()),
+                );
               }),
         ],
       ),
@@ -105,7 +109,7 @@ class _HomeState extends State<Home> {
                           ],
                         ),
                       ),
-                      for (ToDo todo in todosList)
+                      for (ToDo todo in favouriteHabitsList)
                         ToDoItem(
                           todo: todo,
                           onToDoChanged: _handleToDoChange,
