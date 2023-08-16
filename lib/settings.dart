@@ -4,7 +4,8 @@ import 'database_helper.dart';
 
 class Settings extends StatefulWidget {
   final onFavouriteChange;
-  const Settings({Key? key,  required this.onFavouriteChange}) : super(key: key);
+
+  const Settings({Key? key, required this.onFavouriteChange}) : super(key: key);
 
   @override
   State<Settings> createState() => _SettingsState();
@@ -81,27 +82,24 @@ class _SettingsState extends State<Settings> {
                       for (ToDo todo in todosList)
                         Container(
                           margin: const EdgeInsets.only(bottom: 5),
-                          child: ListTile(
-                            onTap: () {
-                              _onChecked(todo);
-                            },
-                            leading: Icon(
-                              todo.isFavourite
-                                  ? Icons.check_box
-                                  : Icons.check_box_outline_blank,
-                              color: Colors.lightBlue,
-                            ),
-                            title: Text(
-                              todo.todoText,
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.black,
-                                decoration: todo.isDone
-                                    ? TextDecoration.lineThrough
-                                    : null,
+                          child: ExpansionTile(
+                              title: Text(
+                                todo.todoText,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
                               ),
-                            ),
-                          ),
+                              leading: IconButton(
+                                  color: Colors.lightBlue,
+                                  onPressed: () {
+                                    _onChecked(todo);
+                                  },
+                                  icon: todo.isFavourite
+                                      ? const Icon(Icons.check_box)
+                                      : const Icon(
+                                          Icons.check_box_outline_blank)),
+                              children: const <Widget>[Text("Hello")]),
                         )
                     ],
                   ),
