@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:newmehabits2/settings.dart';
 import 'package:newmehabits2/todo_history.dart';
 import 'todo.dart';
-import 'todo_item.dart';
+import 'widgets/todo_item.dart';
 import 'database_helper.dart';
 import 'statistic_bar.dart';
 

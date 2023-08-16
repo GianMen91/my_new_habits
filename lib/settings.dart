@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'todo.dart';
 import 'database_helper.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+
+import 'services/notification_service.dart';
+
+DateTime scheduleTime = DateTime.now();
 
 class Settings extends StatefulWidget {
   final onFavouriteChange;
@@ -99,7 +104,10 @@ class _SettingsState extends State<Settings> {
                                       ? const Icon(Icons.check_box)
                                       : const Icon(
                                           Icons.check_box_outline_blank)),
-                              children: const <Widget>[Text("Hello")]),
+                              children: const <Widget>[
+                                DatePickerTxt(),
+                                ScheduleBtn(),
+                              ]),
                         )
                     ],
                   ),
@@ -116,5 +124,54 @@ class _SettingsState extends State<Settings> {
     setState(() {
       todo.isFavourite = !todo.isFavourite;
     });
+  }
+}
+
+class DatePickerTxt extends StatefulWidget {
+  const DatePickerTxt({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<DatePickerTxt> createState() => _DatePickerTxtState();
+}
+
+class _DatePickerTxtState extends State<DatePickerTxt> {
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        DatePicker.showDateTimePicker(
+          context,
+          showTitleActions: true,
+          onChanged: (date) => scheduleTime = date,
+          onConfirm: (date) {},
+        );
+      },
+      child: const Text(
+        'Select Date Time',
+        style: TextStyle(color: Colors.blue),
+      ),
+    );
+  }
+}
+
+class ScheduleBtn extends StatelessWidget {
+  const ScheduleBtn({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      child: const Text('Schedule notifications'),
+      onPressed: () {
+        debugPrint('Notification Scheduled for $scheduleTime');
+        NotificationService().scheduleNotification(
+            title: 'Scheduled Notification',
+            body: '$scheduleTime',
+            scheduledNotificationDateTime: scheduleTime);
+      },
+    );
   }
 }
