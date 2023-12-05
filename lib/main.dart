@@ -32,7 +32,7 @@ class _MyAppState extends State {
         const Duration(seconds: 3),
         () => Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const Home()),
+              MaterialPageRoute(builder: (context) =>  HomePageWidget()),
             ));
   }
 
