@@ -27,8 +27,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
   final Duration animDuration = const Duration(milliseconds: 250);
 
-
-
   int touchedIndex = -1;
 
   bool isPlaying = false;
@@ -65,7 +63,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     int currentDayOfWeek = DateTime.now().weekday;
 
     // Calculate the start and end dates for the week
-    DateTime startDate = DateTime.now().subtract(Duration(days: currentDayOfWeek - 1));
+    DateTime startDate =
+        DateTime.now().subtract(Duration(days: currentDayOfWeek - 1));
     DateTime endDate = startDate.add(Duration(days: 6));
 
     return Scaffold(
@@ -85,17 +84,21 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
-                        children: const [
-                          Text('Good Morning',
-                              style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold)),
+                        children: [
+                          Text(
+                            getGreeting(),
+                            style: const TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -106,35 +109,49 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               height: 71,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
-                                color: (currentDayOfWeek == i + 1) ? const Color(0xFFFFCCB4) : null,
+                                color: (currentDayOfWeek == i + 1)
+                                    ? const Color(0xFFFFCCB4)
+                                    : null,
                               ),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 10, 0, 0),
                                     child: Text(
                                       getDayName(i + 1),
                                       style: TextStyle(
-                                        color: (currentDayOfWeek == i + 1) ? Colors.white : Colors.black,
+                                        color: (currentDayOfWeek == i + 1)
+                                            ? Colors.white
+                                            : Colors.black,
                                       ),
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 0, 5),
                                     child: Container(
                                       width: 35,
                                       height: 35,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color: (currentDayOfWeek == i + 1) ? Colors.white : null,
+                                        color: (currentDayOfWeek == i + 1)
+                                            ? Colors.white
+                                            : null,
                                       ),
-                                      alignment: const AlignmentDirectional(0.00, 0.00),
+                                      alignment: const AlignmentDirectional(
+                                          0.00, 0.00),
                                       child: Text(
-                                        getDayNumber(startDate, i + 1).toString(),
+                                        getDayNumber(startDate, i + 1)
+                                            .toString(),
                                         style: TextStyle(
-                                          color: (currentDayOfWeek == i + 1) ? const Color(0xFFFFCCB4) : Colors.black,
+                                          color: (currentDayOfWeek == i + 1)
+                                              ? const Color(0xFFFFCCB4)
+                                              : Colors.black,
                                         ),
                                       ),
                                     ),
@@ -534,11 +551,23 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     // If the calculated day number is less than 1, it means we are in the previous month
     // Adjust the day number accordingly
     if (dayNumber < 1) {
-      DateTime previousMonth = startDate.subtract(Duration(days: startDate.day));
+      DateTime previousMonth =
+          startDate.subtract(Duration(days: startDate.day));
       dayNumber = previousMonth.day + dayNumber;
     }
 
     return dayNumber;
   }
 
+  String getGreeting() {
+    final hour = DateTime.now().hour;
+
+    if (hour >= 5 && hour < 12) {
+      return 'Good Morning';
+    } else if (hour >= 12 && hour < 18) {
+      return 'Good Afternoon';
+    } else {
+      return 'Good Evening';
+    }
+  }
 }
