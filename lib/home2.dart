@@ -54,278 +54,244 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         "${now.day.toString().padLeft(2, '0')}.${now.month.toString().padLeft(2, '0')}.${now.year.toString()}";
   }
 
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    List<ToDo> favouriteHabitsList =
+        todosList.where((habit) => habit.isFavourite).toList();
+
     // Get the current day of the week (Monday is 1, Sunday is 7)
     int currentDayOfWeek = DateTime.now().weekday;
 
     // Calculate the start and end dates for the week
     DateTime startDate =
-    DateTime.now().subtract(Duration(days: currentDayOfWeek - 1));
+        DateTime.now().subtract(Duration(days: currentDayOfWeek - 1));
     DateTime endDate = startDate.add(Duration(days: 6));
 
     return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: const Color(0xFFFFFBF5),
-      body: SafeArea(
-        top: true,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Text(
-                          getGreeting(),
-                          style: const TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        for (int i = 0; i < 7; i++)
-                          Container(
-                            width: 43,
-                            height: 71,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: (currentDayOfWeek == i + 1)
-                                  ? const Color(0xFFFFCCB4)
-                                  : null,
+        key: scaffoldKey,
+        backgroundColor: const Color(0xFFFFFBF5),
+        body: SafeArea(
+            top: true,
+            child: SingleChildScrollView(
+                child: Column(mainAxisSize: MainAxisSize.max, children: [
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Text(
+                            getGreeting(),
+                            style: const TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
                             ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(
-                                  padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                                  child: Text(
-                                    getDayName(i + 1),
-                                    style: TextStyle(
-                                      color: (currentDayOfWeek == i + 1)
-                                          ? Colors.white
-                                          : Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 5),
-                                  child: Container(
-                                    width: 35,
-                                    height: 35,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: (currentDayOfWeek == i + 1)
-                                          ? Colors.white
-                                          : null,
-                                    ),
-                                    alignment:
-                                    const AlignmentDirectional(0.00, 0.00),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          for (int i = 0; i < 7; i++)
+                            Container(
+                              width: 43,
+                              height: 71,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: (currentDayOfWeek == i + 1)
+                                    ? const Color(0xFFFFCCB4)
+                                    : null,
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 10, 0, 0),
                                     child: Text(
-                                      getDayNumber(startDate, i + 1).toString(),
+                                      getDayName(i + 1),
                                       style: TextStyle(
                                         color: (currentDayOfWeek == i + 1)
-                                            ? const Color(0xFFFFCCB4)
+                                            ? Colors.white
                                             : Colors.black,
                                       ),
                                     ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 0, 5),
+                                    child: Container(
+                                      width: 35,
+                                      height: 35,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: (currentDayOfWeek == i + 1)
+                                            ? Colors.white
+                                            : null,
+                                      ),
+                                      alignment: const AlignmentDirectional(
+                                          0.00, 0.00),
+                                      child: Text(
+                                        getDayNumber(startDate, i + 1)
+                                            .toString(),
+                                        style: TextStyle(
+                                          color: (currentDayOfWeek == i + 1)
+                                              ? const Color(0xFFFFCCB4)
+                                              : Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                height: 131,
+                decoration: const BoxDecoration(),
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 20),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                16, 0, 0, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'DAILY GOAL',
+                                ),
+                                RichText(
+                                  textScaleFactor:
+                                      MediaQuery.of(context).textScaleFactor,
+                                  text: const TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: '65',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 60,
+                                            color: Colors.black),
+                                      ),
+                                      TextSpan(
+                                        text: '%',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                          fontSize: 32,
+                                        ),
+                                      )
+                                    ],
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                      ],
-                    ),
+                        ],
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
-            if (_selectedIndex == 0) // Show main content only when index is 0
-              Expanded(child: _buildMainContent()),
-            if (_selectedIndex == 1) // Show to-do list only when index is 1
-              Expanded(child: _buildToDoList()),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            backgroundColor: Colors.amber,
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            backgroundColor: Colors.amber,
-            label: 'To do List',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: const Color(0xFF1468b3),
-        onTap: _onItemTapped,
-      ),
-    );
-  }
-
-
-  Widget _buildMainContent() {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-
-          Container(
-            height: 131,
-            decoration: const BoxDecoration(),
-            child: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 20),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
+              Container(
+                height: 200, // Adjust the height as needed
+                decoration: const BoxDecoration(),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      const Text(
+                        'GOAL ACHIEVED THIS WEEK',
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: BarChart(mainBarData()),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                decoration: const BoxDecoration(),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'DAILY GOAL',
-                            ),
-                            RichText(
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor,
-                              text: const TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: '65',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 60,
-                                        color: Colors.black),
-                                  ),
-                                  TextSpan(
-                                    text: '%',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                      fontSize: 32,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                      Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text(
+                            'HABITS',
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            height: 300, // Adjust the height as needed
-            decoration: const BoxDecoration(),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  const Text(
-                    'GOAL ACHIEVED THIS WEEK',
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: BarChart(mainBarData()),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildToDoList() {
-    List<ToDo> favouriteHabitsList =
-        todosList.where((habit) => habit.isFavourite).toList();
-
-    return SizedBox(
-      height: 30,
-      child: Column(
-        children: [
-          const Text(
-            'GOAL ACHIEVED THIS WEEK',
-            textAlign: TextAlign.left,
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          Expanded(
-            child: ListView(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(
-                    top: 20,
-                    bottom: 20,
-                  ),
-
                 ),
-                for (ToDo todo in favouriteHabitsList)
-                  ToDoItem(
-                    todo: todo,
-                    onToDoChanged: _handleToDoChange,
-                    onStartActivity: _handleStartActivity,
+              ),
+              Container(
+                height: 200, // Adjust the height as needed
+                decoration: const BoxDecoration(),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: ListView(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    children: [
+                      for (ToDo todo in favouriteHabitsList)
+                        ToDoItem(
+                          todo: todo,
+                          onToDoChanged: _handleToDoChange,
+                          onStartActivity: _handleStartActivity,
+                        ),
+                    ],
                   ),
-              ],
-            ),
-          )
-        ],
-      ),
-
-    );
+                ),
+              ),
+            ]))));
   }
 
   void _handleToDoChange(ToDo todo) async {
