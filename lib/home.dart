@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:newmehabits2/todo_history.dart';
+import 'costants/constants.dart';
 import 'todo.dart';
 import 'widgets/todo_item.dart';
 import 'database_helper.dart';
@@ -9,7 +10,7 @@ class HomePageWidget extends StatefulWidget {
   HomePageWidget({Key? key}) : super(key: key);
 
   final Color barBackgroundColor = Colors.grey.withOpacity(0.3);
-  final Color barColor = Colors.lightBlue;
+
   final Color touchedBarColor = Colors.yellow;
   final Color touchedBarColorDarker = const Color(0x165318FF);
   List<ToDo> favouriteHabitsList = [];
@@ -74,7 +75,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: const Color(0xFFFFFBF5),
+      backgroundColor: backgroundColor,
       body: SafeArea(
         top: true,
         child: Column(
@@ -150,7 +151,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       getDayNumber(startDate, i + 1).toString(),
                                       style: TextStyle(
                                         color: (currentDayOfWeek == i + 1)
-                                            ? const Color(0xFFFFCCB4)
+                                            ? selectedColor
                                             : Colors.black,
                                       ),
                                     ),
@@ -349,7 +350,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     double width = 22,
     List<int> showTooltips = const [],
   }) {
-    barColor ??= widget.barColor;
+    barColor ??= selectedColor;
     return BarChartGroupData(
       x: x,
       barRods: [
@@ -359,7 +360,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           width: width,
           borderSide: isTouched
               ? BorderSide(color: widget.touchedBarColorDarker)
-              : const BorderSide(color: Colors.lightBlue, width: 0),
+              : const BorderSide(color: selectedColor, width: 0),
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
             toY: widget.favouriteHabitsList.length.toDouble(),
@@ -509,7 +510,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
   Widget getTitles(double value, TitleMeta meta) {
     const style = TextStyle(
-      color: Colors.lightBlue,
+      color: selectedColor,
       fontWeight: FontWeight.bold,
       fontSize: 14,
     );
