@@ -288,7 +288,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
   Widget _buildToDoList() {
     List<ToDo> favouriteHabitsList =
-    todosList.where((habit) => habit.isFavourite).toList();
+        todosList.where((habit) => habit.isFavourite).toList();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -317,8 +317,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       ],
     );
   }
-
-
 
   void _handleToDoChange(ToDo todo) async {
     todo.isDone = !todo.isDone;
