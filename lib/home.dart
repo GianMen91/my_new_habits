@@ -177,17 +177,15 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            backgroundColor: Colors.amber,
             label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
-            backgroundColor: Colors.amber,
             label: 'To do List',
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: const Color(0xFF1468b3),
+        selectedItemColor: selectedColor,
         onTap: _onItemTapped,
       ),
     );

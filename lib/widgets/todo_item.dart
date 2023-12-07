@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newmehabits2/costants/constants.dart';
 
 import '../costants/habits_info_costants.dart';
 import '../todo.dart';
@@ -26,7 +27,7 @@ class ToDoItem extends StatelessWidget {
         },
         leading: Icon(
           todo.isDone ? Icons.check_box : Icons.check_box_outline_blank,
-          color: Colors.lightBlue,
+          color: selectedColor,
         ),
         title: Text(
           todo.todoText,
@@ -42,7 +43,7 @@ class ToDoItem extends StatelessWidget {
           height: 35,
           width: 35,
           decoration: BoxDecoration(
-            color: Colors.lightBlue,
+            color: selectedColor,
             borderRadius: BorderRadius.circular(5),
           ),
           child: IconButton(
