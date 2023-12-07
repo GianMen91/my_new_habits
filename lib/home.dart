@@ -69,7 +69,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
     // Calculate the start and end dates for the week
     DateTime startDate =
-    DateTime.now().subtract(Duration(days: currentDayOfWeek - 1));
+        DateTime.now().subtract(Duration(days: currentDayOfWeek - 1));
     DateTime endDate = startDate.add(Duration(days: 6));
 
     return Scaffold(
@@ -121,8 +121,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Padding(
-                                  padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 10, 0, 0),
                                   child: Text(
                                     getDayName(i + 1),
                                     style: TextStyle(
@@ -145,7 +145,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           : null,
                                     ),
                                     alignment:
-                                    const AlignmentDirectional(0.00, 0.00),
+                                        const AlignmentDirectional(0.00, 0.00),
                                     child: Text(
                                       getDayNumber(startDate, i + 1).toString(),
                                       style: TextStyle(
@@ -192,13 +192,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     );
   }
 
-
   Widget _buildMainContent() {
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-
           Container(
             height: 131,
             decoration: const BoxDecoration(),
@@ -290,43 +288,37 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
   Widget _buildToDoList() {
     List<ToDo> favouriteHabitsList =
-        todosList.where((habit) => habit.isFavourite).toList();
+    todosList.where((habit) => habit.isFavourite).toList();
 
-    return SizedBox(
-      height: 30,
-      child: Column(
-        children: [
-          const Text(
-            'GOAL ACHIEVED THIS WEEK',
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(16, 20, 0, 0),
+          child: Text(
+            'HABITS',
             textAlign: TextAlign.left,
           ),
-          const SizedBox(
-            height: 16,
-          ),
-          Expanded(
-            child: ListView(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(
-                    top: 20,
-                    bottom: 20,
-                  ),
-
+        ),
+        const SizedBox(height: 16),
+        Expanded(
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              for (ToDo todo in favouriteHabitsList)
+                ToDoItem(
+                  todo: todo,
+                  onToDoChanged: _handleToDoChange,
+                  onStartActivity: _handleStartActivity,
                 ),
-                for (ToDo todo in favouriteHabitsList)
-                  ToDoItem(
-                    todo: todo,
-                    onToDoChanged: _handleToDoChange,
-                    onStartActivity: _handleStartActivity,
-                  ),
-              ],
-            ),
-          )
-        ],
-      ),
-
+            ],
+          ),
+        ),
+      ],
     );
   }
+
+
 
   void _handleToDoChange(ToDo todo) async {
     todo.isDone = !todo.isDone;
