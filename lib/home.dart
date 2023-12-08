@@ -37,6 +37,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     _loadTodosFromDatabase();
     _loadTodayDate();
     _resetCheckboxesIfNewDay();
+
     super.initState();
   }
 
@@ -46,6 +47,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     setState(() {
       todosList = todos;
       toDoHistory = todoHistory;
+      widget.favouriteHabitsList =
+          todosList.where((habit) => habit.isFavourite).toList();
     });
   }
 
@@ -174,6 +177,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -286,8 +290,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   }
 
   Widget _buildToDoList() {
-    List<ToDo> favouriteHabitsList =
-        todosList.where((habit) => habit.isFavourite).toList();
+
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -304,7 +307,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           child: ListView(
             shrinkWrap: true,
             children: [
-              for (ToDo todo in favouriteHabitsList)
+              for (ToDo todo in widget.favouriteHabitsList)
                 ToDoItem(
                   todo: todo,
                   onToDoChanged: _handleToDoChange,
