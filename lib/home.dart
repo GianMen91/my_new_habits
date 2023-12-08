@@ -195,7 +195,64 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     );
   }
 
+
+  Widget _buildToDoList() {
+
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(16, 20, 0, 0),
+          child: Text(
+            'HABITS',
+            textAlign: TextAlign.left,
+          ),
+        ),
+        const SizedBox(height: 16),
+        Expanded(
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              for (ToDo todo in widget.favouriteHabitsList)
+                ToDoItem(
+                  todo: todo,
+                  onToDoChanged: _handleToDoChange,
+                  onStartActivity: _handleStartActivity,
+                ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+
+  void _handleToDoChange(ToDo todo) async {
+    todo.isDone = !todo.isDone;
+    await DatabaseHelper.instance.updateTodoStatus(todo);
+    _loadTodosFromDatabase();
+  }
+
+  void _handleStartActivity(int id) async {
+    //go to the related screen
+  }
+
+  void _resetCheckboxesIfNewDay() async {
+    final todos = await DatabaseHelper.instance.getTodos();
+    final now = DateTime.now();
+    for (ToDo todo in todos) {
+      final todoDate = DateTime.parse(todo.recordDate);
+      if (todoDate.isBefore(DateTime(now.year, now.month, now.day))) {
+        todo.isDone = false;
+        await DatabaseHelper.instance.updateTodoStatus(todo);
+      }
+    }
+    _loadTodosFromDatabase();
+  }
+
   Widget _buildMainContent() {
+    var percentageValueOfAchieveDailyGoals = '65';
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.max,
@@ -217,7 +274,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     children: [
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                        const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -227,17 +284,17 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             ),
                             RichText(
                               textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor,
-                              text: const TextSpan(
+                              MediaQuery.of(context).textScaleFactor,
+                              text: TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: '65',
-                                    style: TextStyle(
+                                    text: percentageValueOfAchieveDailyGoals,
+                                    style: const TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 60,
                                         color: Colors.black),
                                   ),
-                                  TextSpan(
+                                  const TextSpan(
                                     text: '%',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -287,60 +344,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         ],
       ),
     );
-  }
-
-  Widget _buildToDoList() {
-
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(16, 20, 0, 0),
-          child: Text(
-            'HABITS',
-            textAlign: TextAlign.left,
-          ),
-        ),
-        const SizedBox(height: 16),
-        Expanded(
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              for (ToDo todo in widget.favouriteHabitsList)
-                ToDoItem(
-                  todo: todo,
-                  onToDoChanged: _handleToDoChange,
-                  onStartActivity: _handleStartActivity,
-                ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  void _handleToDoChange(ToDo todo) async {
-    todo.isDone = !todo.isDone;
-    await DatabaseHelper.instance.updateTodoStatus(todo);
-    _loadTodosFromDatabase();
-  }
-
-  void _handleStartActivity(int id) async {
-    //go to the related screen
-  }
-
-  void _resetCheckboxesIfNewDay() async {
-    final todos = await DatabaseHelper.instance.getTodos();
-    final now = DateTime.now();
-    for (ToDo todo in todos) {
-      final todoDate = DateTime.parse(todo.recordDate);
-      if (todoDate.isBefore(DateTime(now.year, now.month, now.day))) {
-        todo.isDone = false;
-        await DatabaseHelper.instance.updateTodoStatus(todo);
-      }
-    }
-    _loadTodosFromDatabase();
   }
 
   BarChartGroupData makeGroupData(
