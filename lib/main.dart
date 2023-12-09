@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newmehabits2/costants/constants.dart';
 import 'package:newmehabits2/services/notification_service.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
@@ -39,7 +40,7 @@ class _MyAppState extends State {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlue,
+      backgroundColor: selectedColor,
       body: Column(
         children: <Widget>[
           Expanded(
