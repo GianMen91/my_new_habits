@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'costants/constants.dart';
 import 'todo.dart';
 import 'database_helper.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -35,59 +36,71 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Settings'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-            widget.onFavouriteChange();
-          },
-        ),
-        actions: <Widget>[
-          IconButton(
-              icon: const Icon(Icons.save),
-              onPressed: () async {
-                for (ToDo todo in todosList) {
-                  await DatabaseHelper.instance.updateFavouriteStatus(todo);
-                }
-              }),
-        ],
-      ),
-      body: Stack(
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 15,
-            ),
-            child: Column(
-              children: [
-                Expanded(
-                  child: ListView(
+      backgroundColor: backgroundColor,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 15,
+              ),
+              child: Column(
+                children: [
+                  Row(
                     children: [
-                      Container(
-                        margin: const EdgeInsets.only(
-                          top: 20,
-                          bottom: 20,
-                        ),
-                        child: Column(
-                          children: const [
-                            Text(
-                              'Choose the habits you want to follow and click on the save button to save the changes',
-                              /*style: TextStyle(
-                                color: Colors.lightBlue,
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                              ),*/
-                            ),
-                          ],
-                        ),
+                      IconButton(
+                        icon: const Icon(Icons.arrow_back),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          widget.onFavouriteChange();
+                        },
                       ),
-                      for (ToDo todo in todosList)
+
+                      Text(
+                        'Settings',
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      Spacer(),
+                      // Adds spacing between title and icons
+                      IconButton(
+                        icon: const Icon(Icons.save),
+                        onPressed: () async {
+                          for (ToDo todo in todosList) {
+                            await DatabaseHelper.instance
+                                .updateFavouriteStatus(todo);
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(
+                        right: 15, left: 15, top: 10, bottom: 20),
+                    child: Text(
+                      'Choose the habits you want to follow and click on the save button to save the changes',
+                      /*style: TextStyle(
+                                  color: Colors.lightBlue,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),*/
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView(
+                      children: [
                         Container(
-                          margin: const EdgeInsets.only(bottom: 5),
-                          child: ExpansionTile(
+                          margin: const EdgeInsets.only(
+                            bottom: 20,
+                          ),
+                          child: Column(
+                            children: const [],
+                          ),
+                        ),
+                        for (ToDo todo in todosList)
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 5),
+                            child: ExpansionTile(
                               title: Text(
                                 todo.todoText,
                                 style: const TextStyle(
@@ -96,26 +109,28 @@ class _SettingsState extends State<Settings> {
                                 ),
                               ),
                               leading: IconButton(
-                                  color: Colors.lightBlue,
-                                  onPressed: () {
-                                    _onChecked(todo);
-                                  },
-                                  icon: todo.isFavourite
-                                      ? const Icon(Icons.check_box)
-                                      : const Icon(
-                                          Icons.check_box_outline_blank)),
+                                color: selectedColor,
+                                onPressed: () {
+                                  _onChecked(todo);
+                                },
+                                icon: todo.isFavourite
+                                    ? const Icon(Icons.check_box)
+                                    : const Icon(Icons.check_box_outline_blank),
+                              ),
                               children: const <Widget>[
                                 DatePickerTxt(),
                                 ScheduleBtn(),
-                              ]),
-                        )
-                    ],
+                              ],
+                            ),
+                          ),
+                      ],
+                    ),
                   ),
-                )
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -150,7 +165,7 @@ class _DatePickerTxtState extends State<DatePickerTxt> {
       },
       child: const Text(
         'Select Date Time',
-        style: TextStyle(color: Colors.blue),
+        style: TextStyle(color: selectedColor),
       ),
     );
   }
