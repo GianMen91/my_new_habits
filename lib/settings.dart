@@ -100,29 +100,28 @@ class _SettingsState extends State<Settings> {
                         for (ToDo todo in todosList)
                           Container(
                             margin: const EdgeInsets.only(bottom: 5),
-                            child: ExpansionTile(
+                            child: ListTile(
+                              onTap: () {
+                                _onChecked(todo);
+                              },
+                              leading: Icon(
+                                todo.isFavourite
+                                    ? Icons.check_box
+                                    : Icons.check_box_outline_blank,
+                                color: selectedColor,
+                              ),
                               title: Text(
                                 todo.todoText,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.black,
+                                  decoration: todo.isDone
+                                      ? TextDecoration.lineThrough
+                                      : null,
                                 ),
                               ),
-                              leading: IconButton(
-                                color: selectedColor,
-                                onPressed: () {
-                                  _onChecked(todo);
-                                },
-                                icon: todo.isFavourite
-                                    ? const Icon(Icons.check_box)
-                                    : const Icon(Icons.check_box_outline_blank),
-                              ),
-                              children: const <Widget>[
-                                DatePickerTxt(),
-                                ScheduleBtn(),
-                              ],
                             ),
-                          ),
+                          )
                       ],
                     ),
                   ),
