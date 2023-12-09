@@ -388,20 +388,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     for (var day = lastMonday;
         day.isBefore(nextSunday.add(const Duration(days: 1)));
         day = day.add(const Duration(days: 1))) {
-      var uniqueIds = <int>{};
-
-      for (var todo in toDoHistory) {
-        var todoDate = DateTime.parse(todo.changeDate);
-        var normalizedTodoDate =
-            DateTime(todoDate.year, todoDate.month, todoDate.day);
-        var normalizedDay = DateTime(day.year, day.month, day.day);
-
-        if (normalizedTodoDate == normalizedDay) {
-          uniqueIds.add(todo.id);
-        }
-      }
-
-      completedCounts[day.weekday - 1] = uniqueIds.length;
+      completedCounts[day.weekday - 1]  = calculateCompletedTaskPerDay(day);
     }
 
     // Generate BarChartGroupData list based on completedCounts
@@ -411,6 +398,23 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     });
 
     return list;
+  }
+
+  int calculateCompletedTaskPerDay(DateTime day) {
+    var uniqueIds = <int>{};
+
+    for (var todo in toDoHistory) {
+      var todoDate = DateTime.parse(todo.changeDate);
+      var normalizedTodoDate =
+          DateTime(todoDate.year, todoDate.month, todoDate.day);
+      var normalizedDay = DateTime(day.year, day.month, day.day);
+
+      if (normalizedTodoDate == normalizedDay) {
+        uniqueIds.add(todo.id);
+      }
+    }
+
+    return uniqueIds.length;
   }
 
   BarChartData mainBarData() {
@@ -599,11 +603,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
   int calculateDailyGoalPercentage() {
     // Calculate the current day index (0 for Monday, 1 for Tuesday, ..., 6 for Sunday)
-    int currentDayIndex = DateTime.now().weekday - 1;
+    //int currentDayIndex = DateTime.now().weekday - 1;
 
     // Get the completed task count for the current day
-    int completedTasks =
-        showingGroups()[currentDayIndex].barRods[0].toY.toInt();
+    int completedTasks = calculateCompletedTaskPerDay(DateTime.now());
 
     // Get the total number of tasks for the current day
     int totalTasks = widget.favouriteHabitsList.length;
