@@ -195,10 +195,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     );
   }
 
-
   Widget _buildToDoList() {
-
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -227,7 +224,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     );
   }
 
-
   void _handleToDoChange(ToDo todo) async {
     todo.isDone = !todo.isDone;
     await DatabaseHelper.instance.updateTodoStatus(todo);
@@ -252,7 +248,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   }
 
   Widget _buildMainContent() {
-    var percentageValueOfAchieveDailyGoals = '65';
+    var percentageValueOfAchieveDailyGoals = calculateDailyGoalPercentage();
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.max,
@@ -274,7 +270,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     children: [
                       Padding(
                         padding:
-                        const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                            const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -284,11 +280,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             ),
                             RichText(
                               textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor,
+                                  MediaQuery.of(context).textScaleFactor,
                               text: TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: percentageValueOfAchieveDailyGoals,
+                                    text: percentageValueOfAchieveDailyGoals
+                                        .toString(),
                                     style: const TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 60,
@@ -597,6 +594,29 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       return 'Good Afternoon';
     } else {
       return 'Good Evening';
+    }
+  }
+
+  int calculateDailyGoalPercentage() {
+    // Calculate the current day index (0 for Monday, 1 for Tuesday, ..., 6 for Sunday)
+    int currentDayIndex = DateTime.now().weekday - 1;
+
+    // Get the completed task count for the current day
+    int completedTasks =
+        showingGroups()[currentDayIndex].barRods[0].toY.toInt();
+
+    // Get the total number of tasks for the current day
+    int totalTasks = widget.favouriteHabitsList.length;
+
+    // Calculate the percentage
+    double percentage =
+        (totalTasks > 0) ? (completedTasks / totalTasks) * 100 : 0;
+
+    // Check if percentage is finite before rounding
+    if (percentage.isFinite) {
+      return percentage.round();
+    } else {
+      return 0; // or any default value you prefer
     }
   }
 }
