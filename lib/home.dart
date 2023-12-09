@@ -89,7 +89,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -97,7 +97,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           getGreeting(),
                           style: const TextStyle(
                             fontFamily: 'Inter',
-                            fontSize: 24,
+                            fontSize: 34,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -323,7 +323,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     'GOAL ACHIEVED THIS WEEK',
                   ),
                   const SizedBox(
-                    height: 16,
+                    height: 36,
                   ),
                   Expanded(
                     child: Padding(
