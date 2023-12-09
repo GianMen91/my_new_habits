@@ -459,9 +459,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               ),
               children: <TextSpan>[
                 TextSpan(
-                  text: (rod.toY - 1).toString() +
+                  text: (rod.toY - 1).round().toString() +
                       " / " +
-                      widget.favouriteHabitsList.length.toDouble().toString(),
+                      widget.favouriteHabitsList.length.round().toString(),
                   style: TextStyle(
                     color: widget.touchedBarColor,
                     fontSize: 16,
