@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:newmehabits2/settings.dart';
 import 'package:newmehabits2/todo_history.dart';
 import 'costants/constants.dart';
 import 'todo.dart';
@@ -100,6 +101,17 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             fontSize: 34,
                             fontWeight: FontWeight.bold,
                           ),
+                        ),
+                        const SizedBox(width: 60),
+                        IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) =>  Settings(onFavouriteChange: _loadTodosFromDatabase)),
+                            );
+                          },
+                          iconSize: 22,
+                          icon: new Icon(Icons.settings),
                         ),
                       ],
                     ),
