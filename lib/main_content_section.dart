@@ -165,7 +165,7 @@ class _MainContentSectionState extends State<MainContentSection> {
                   text: (rod.toY - 1).round().toString() +
                       " / " +
                       widget.favouriteHabitsList.length.round().toString(),
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: touchedBarColor,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -264,7 +264,7 @@ class _MainContentSectionState extends State<MainContentSection> {
           color: isTouched ? touchedBarColor : barColor,
           width: width,
           borderSide: isTouched
-              ? BorderSide(color: touchedBarColorDarker)
+              ? const BorderSide(color: touchedBarColorDarker)
               : const BorderSide(color: selectedColor, width: 0),
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
