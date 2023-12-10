@@ -226,10 +226,14 @@ class _MainContentSectionState extends State<MainContentSection> {
 
     // Calculate the start and end dates for the past week (Monday to Sunday)
     final now = DateTime.now();
-    final today = now.weekday;
-    final lastMonday =
-        now.subtract(Duration(days: today - 1 + (today == 7 ? 6 : 0)));
-    final nextSunday = lastMonday.add(const Duration(days: 6));
+    final lastMonday = now.subtract(Duration(days: now.weekday - 1));
+    final nextSunday = lastMonday.add(Duration(days: 6));
+
+// Adjust to start from the current week if today is Sunday
+    if (now.weekday == 7) {
+      lastMonday.add(Duration(days: 7));
+      nextSunday.add(Duration(days: 7));
+    }
 
     // Iterate through todos history and calculate completed tasks for each day of the past week
     for (var day = lastMonday;
