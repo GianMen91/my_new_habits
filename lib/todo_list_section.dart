@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
-import 'costants/constants.dart';
 import 'todo.dart';
 import 'widgets/todo_item.dart';
-import 'database_helper.dart';
-import 'settings.dart';
-import 'todo_history.dart';
 
 class ToDoListSection extends StatelessWidget {
   final List<ToDo> favouriteHabitsList;
   final Function(ToDo) handleToDoChange;
   final Function(int) handleStartActivity;
 
-  ToDoListSection(this.favouriteHabitsList, this.handleToDoChange, this.handleStartActivity);
+  const ToDoListSection(this.favouriteHabitsList, this.handleToDoChange, this.handleStartActivity, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -11,7 +11,7 @@ class MainContentSection extends StatefulWidget {
   final List<ToDoHistory> toDoHistory;
 
 
-  MainContentSection(this.favouriteHabitsList, this.todosList, this.toDoHistory);
+  const MainContentSection(this.favouriteHabitsList, this.todosList, this.toDoHistory, {Key? key}) : super(key: key);
 
   @override
   State<MainContentSection> createState() => _MainContentSectionState();

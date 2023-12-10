@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
-import 'DaySelectionRow.dart';
-import 'GreetingSection.dart';
-import 'MainContentSection.dart';
-import 'ToDoListSection.dart';
+import 'day_selection_row.dart';
+import 'greetings.dart';
+import 'main_content_section.dart';
+import 'todo_list_section.dart';
 import 'costants/constants.dart';
 import 'todo.dart';
-import 'widgets/todo_item.dart';
 import 'database_helper.dart';
 import 'settings.dart';
 import 'todo_history.dart';
 
 class HomePageWidget extends StatefulWidget {
-  HomePageWidget({Key? key}) : super(key: key);
-
-  List<ToDo> favouriteHabitsList = [];
+  const HomePageWidget({Key? key}) : super(key: key);
 
   @override
   _HomePageWidgetState createState() => _HomePageWidgetState();
@@ -22,6 +18,8 @@ class HomePageWidget extends StatefulWidget {
 
 class _HomePageWidgetState extends State<HomePageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  List<ToDo> favouriteHabitsList = [];
 
   List<ToDo> todosList = [];
   List<ToDoHistory> toDoHistory = [];
@@ -48,7 +46,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     setState(() {
       todosList = todos;
       toDoHistory = todoHistory;
-      widget.favouriteHabitsList =
+      favouriteHabitsList =
           todosList.where((habit) => habit.isFavourite).toList();
     });
   }
@@ -69,13 +67,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // Get the current day of the week (Monday is 1, Sunday is 7)
-    int currentDayOfWeek = DateTime.now().weekday;
-
-    // Calculate the start and end dates for the week
-    DateTime startDate =
-        DateTime.now().subtract(Duration(days: currentDayOfWeek - 1));
-    DateTime endDate = startDate.add(Duration(days: 6));
 
     return Scaffold(
       key: scaffoldKey,
@@ -117,9 +108,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               ),
             ),
             if (_selectedIndex == 0) // Show main content only when index is 0
-              Expanded(child: MainContentSection(widget.favouriteHabitsList, todosList, toDoHistory)),
+              Expanded(child: MainContentSection(favouriteHabitsList, todosList, toDoHistory)),
             if (_selectedIndex == 1) // Show to-do list only when index is 1
-              Expanded(child: ToDoListSection(widget.favouriteHabitsList, _handleToDoChange, _handleStartActivity)),
+              Expanded(child: ToDoListSection(favouriteHabitsList, _handleToDoChange, _handleStartActivity)),
           ],
         ),
       ),
