@@ -7,7 +7,10 @@ class ToDoListSection extends StatelessWidget {
   final Function(ToDo) handleToDoChange;
   final Function(int) handleStartActivity;
 
-  const ToDoListSection(this.favouriteHabitsList, this.handleToDoChange, this.handleStartActivity, {Key? key}) : super(key: key);
+  const ToDoListSection(
+      this.favouriteHabitsList, this.handleToDoChange, this.handleStartActivity,
+      {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

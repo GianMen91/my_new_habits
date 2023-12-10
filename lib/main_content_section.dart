@@ -5,13 +5,14 @@ import 'todo.dart';
 import 'todo_history.dart';
 
 class MainContentSection extends StatefulWidget {
-
   final List<ToDo> favouriteHabitsList;
   final List<ToDo> todosList;
   final List<ToDoHistory> toDoHistory;
 
-
-  const MainContentSection(this.favouriteHabitsList, this.todosList, this.toDoHistory, {Key? key}) : super(key: key);
+  const MainContentSection(
+      this.favouriteHabitsList, this.todosList, this.toDoHistory,
+      {Key? key})
+      : super(key: key);
 
   @override
   State<MainContentSection> createState() => _MainContentSectionState();
@@ -50,7 +51,7 @@ class _MainContentSectionState extends State<MainContentSection> {
                     children: [
                       Padding(
                         padding:
-                        const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                            const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,7 +61,7 @@ class _MainContentSectionState extends State<MainContentSection> {
                             ),
                             RichText(
                               textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor,
+                                  MediaQuery.of(context).textScaleFactor,
                               text: TextSpan(
                                 children: [
                                   TextSpan(
@@ -227,14 +228,14 @@ class _MainContentSectionState extends State<MainContentSection> {
     final now = DateTime.now();
     final today = now.weekday;
     final lastMonday =
-    now.subtract(Duration(days: today - 1 + (today == 7 ? 6 : 0)));
+        now.subtract(Duration(days: today - 1 + (today == 7 ? 6 : 0)));
     final nextSunday = lastMonday.add(const Duration(days: 6));
 
     // Iterate through todos history and calculate completed tasks for each day of the past week
     for (var day = lastMonday;
-    day.isBefore(nextSunday.add(const Duration(days: 1)));
-    day = day.add(const Duration(days: 1))) {
-      completedCounts[day.weekday - 1]  = calculateCompletedTaskPerDay(day);
+        day.isBefore(nextSunday.add(const Duration(days: 1)));
+        day = day.add(const Duration(days: 1))) {
+      completedCounts[day.weekday - 1] = calculateCompletedTaskPerDay(day);
     }
 
     // Generate BarChartGroupData list based on completedCounts
@@ -247,13 +248,13 @@ class _MainContentSectionState extends State<MainContentSection> {
   }
 
   BarChartGroupData makeGroupData(
-      int x,
-      double y, {
-        bool isTouched = false,
-        Color? barColor,
-        double width = 22,
-        List<int> showTooltips = const [],
-      }) {
+    int x,
+    double y, {
+    bool isTouched = false,
+    Color? barColor,
+    double width = 22,
+    List<int> showTooltips = const [],
+  }) {
     barColor ??= selectedColor;
     return BarChartGroupData(
       x: x,
@@ -288,7 +289,7 @@ class _MainContentSectionState extends State<MainContentSection> {
 
     // Calculate the percentage
     double percentage =
-    (totalTasks > 0) ? (completedTasks / totalTasks) * 100 : 0;
+        (totalTasks > 0) ? (completedTasks / totalTasks) * 100 : 0;
 
     // Check if percentage is finite before rounding
     if (percentage.isFinite) {
@@ -304,7 +305,7 @@ class _MainContentSectionState extends State<MainContentSection> {
     for (var todo in widget.toDoHistory) {
       var todoDate = DateTime.parse(todo.changeDate);
       var normalizedTodoDate =
-      DateTime(todoDate.year, todoDate.month, todoDate.day);
+          DateTime(todoDate.year, todoDate.month, todoDate.day);
       var normalizedDay = DateTime(day.year, day.month, day.day);
 
       if (normalizedTodoDate == normalizedDay) {

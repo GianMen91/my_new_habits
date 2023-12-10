@@ -67,7 +67,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: backgroundColor,
@@ -91,7 +90,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) =>  Settings(onFavouriteChange: _loadTodosFromDatabase)),
+                              MaterialPageRoute(
+                                  builder: (context) => Settings(
+                                      onFavouriteChange:
+                                          _loadTodosFromDatabase)),
                             );
                           },
                           iconSize: 22,
@@ -102,15 +104,20 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                    child: DaySelectionRow(currentDayOfWeek: DateTime.now().weekday),
+                    child: DaySelectionRow(
+                        currentDayOfWeek: DateTime.now().weekday),
                   ),
                 ],
               ),
             ),
             if (_selectedIndex == 0) // Show main content only when index is 0
-              Expanded(child: MainContentSection(favouriteHabitsList, todosList, toDoHistory)),
+              Expanded(
+                  child: MainContentSection(
+                      favouriteHabitsList, todosList, toDoHistory)),
             if (_selectedIndex == 1) // Show to-do list only when index is 1
-              Expanded(child: ToDoListSection(favouriteHabitsList, _handleToDoChange, _handleStartActivity)),
+              Expanded(
+                  child: ToDoListSection(favouriteHabitsList, _handleToDoChange,
+                      _handleStartActivity)),
           ],
         ),
       ),
