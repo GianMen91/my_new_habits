@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'costants/constants.dart';
+import 'costants/habits_info_costants.dart';
 import 'todo.dart';
 import 'database_helper.dart';
 
@@ -48,7 +49,13 @@ class _SettingsState extends State<Settings> {
                     children: [
                       IconButton(
                         icon: const Icon(Icons.arrow_back),
-                        onPressed: () {
+                        onPressed: () async {
+
+                          for (ToDo todo in todosList) {
+                            await DatabaseHelper.instance
+                                .updateFavouriteStatus(todo);
+                          }
+
                           Navigator.pop(context);
                           widget.onFavouriteChange();
                         },
@@ -56,18 +63,10 @@ class _SettingsState extends State<Settings> {
 
                       Text(
                         'Settings',
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      Spacer(),
-                      // Adds spacing between title and icons
-                      IconButton(
-                        icon: const Icon(Icons.save),
-                        onPressed: () async {
-                          for (ToDo todo in todosList) {
-                            await DatabaseHelper.instance
-                                .updateFavouriteStatus(todo);
-                          }
-                        },
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headline6,
                       ),
                     ],
                   ),
@@ -98,25 +97,40 @@ class _SettingsState extends State<Settings> {
                           Container(
                             margin: const EdgeInsets.only(bottom: 5),
                             child: ListTile(
-                              onTap: () {
-                                _onChecked(todo);
-                              },
-                              leading: Icon(
-                                todo.isFavourite
-                                    ? Icons.check_box
-                                    : Icons.check_box_outline_blank,
-                                color: selectedColor,
-                              ),
-                              title: Text(
-                                todo.todoText,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  decoration: todo.isDone
-                                      ? TextDecoration.lineThrough
-                                      : null,
+                                onTap: () {
+                                  _onChecked(todo);
+                                },
+                                leading: Icon(
+                                  todo.isFavourite
+                                      ? Icons.check_box
+                                      : Icons.check_box_outline_blank,
+                                  color: selectedColor,
                                 ),
-                              ),
+                                title: Text(
+                                  todo.todoText,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                trailing: Container(
+                                  padding: const EdgeInsets.all(0),
+                                  margin: const EdgeInsets.symmetric(vertical: 12),
+                                  height: 35,
+                                  width: 35,
+                                  decoration: BoxDecoration(
+                                    color: selectedColor,
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: IconButton(
+                                    color: Colors.white,
+                                    iconSize: 18,
+                                    icon: const Icon(Icons.info_outline),
+                                    onPressed: () {
+                                      _dialogBuilder(context, todo);
+                                    },
+                                  ),
+                                )
                             ),
                           )
                       ],
@@ -128,6 +142,26 @@ class _SettingsState extends State<Settings> {
           ],
         ),
       ),
+    );
+  }
+
+  Future<void> _dialogBuilder(BuildContext context, ToDo todo) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(todo.todoText),
+          content: Text(details[todo.id - 1]),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 

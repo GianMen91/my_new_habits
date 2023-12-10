@@ -37,24 +37,7 @@ class ToDoItem extends StatelessWidget {
             decoration: todo.isDone ? TextDecoration.lineThrough : null,
           ),
         ),
-        trailing: Container(
-          padding: const EdgeInsets.all(0),
-          margin: const EdgeInsets.symmetric(vertical: 12),
-          height: 35,
-          width: 35,
-          decoration: BoxDecoration(
-            color: selectedColor,
-            borderRadius: BorderRadius.circular(5),
-          ),
-          child: IconButton(
-            color: Colors.white,
-            iconSize: 18,
-            icon: const Icon(Icons.info_outline),
-            onPressed: () {
-              _dialogBuilder(context, todo);
-            },
-          ),
-        ),
+
         /*trailing: Container(
           padding: const EdgeInsets.all(0),
           margin: const EdgeInsets.symmetric(vertical: 12),
@@ -78,23 +61,4 @@ class ToDoItem extends StatelessWidget {
     );
   }
 
-  Future<void> _dialogBuilder(BuildContext context, ToDo todo) {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(todo.todoText),
-          content: Text(details[todo.id - 1]),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Close'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 }
