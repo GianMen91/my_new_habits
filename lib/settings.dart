@@ -61,12 +61,13 @@ class _SettingsState extends State<Settings> {
                         },
                       ),
 
-                      Text(
+                      const Text(
                         'Settings',
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .headline6,
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ],
                   ),
