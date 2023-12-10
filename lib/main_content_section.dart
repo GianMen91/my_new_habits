@@ -23,10 +23,6 @@ class _MainContentSectionState extends State<MainContentSection> {
 
   final Color barBackgroundColor = Colors.grey.withOpacity(0.3);
 
-  final Color touchedBarColor = Colors.yellow;
-
-  final Color touchedBarColorDarker = const Color(0x165318FF);
-
   @override
   Widget build(BuildContext context) {
     var percentageValueOfAchieveDailyGoals = calculateDailyGoalPercentage();
