@@ -5,10 +5,9 @@ import 'widgets/todo_item.dart';
 class ToDoListSection extends StatelessWidget {
   final List<ToDo> favouriteHabitsList;
   final Function(ToDo) handleToDoChange;
-  final Function(int) handleStartActivity;
 
   const ToDoListSection(
-      this.favouriteHabitsList, this.handleToDoChange, this.handleStartActivity,
+      this.favouriteHabitsList, this.handleToDoChange,
       {Key? key})
       : super(key: key);
 
@@ -20,8 +19,16 @@ class ToDoListSection extends StatelessWidget {
         const Padding(
           padding: EdgeInsetsDirectional.fromSTEB(16, 20, 0, 0),
           child: Text(
-            'HABITS',
+            "TODAY'S PLANNING",
             textAlign: TextAlign.left,
+          ),
+        ),
+         Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(16, 20, 0, 0),
+          child: Text(
+            "YOU HAVE "+favouriteHabitsList.length.toString()+" TO DO",
+            textAlign: TextAlign.left,
+            style: const TextStyle(fontSize: 10),
           ),
         ),
         const SizedBox(height: 16),
@@ -33,7 +40,6 @@ class ToDoListSection extends StatelessWidget {
                 ToDoItem(
                   todo: todo,
                   onToDoChanged: handleToDoChange,
-                  onStartActivity: handleStartActivity,
                 ),
             ],
           ),

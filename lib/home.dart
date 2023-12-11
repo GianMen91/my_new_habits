@@ -113,11 +113,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             if (_selectedIndex == 0) // Show main content only when index is 0
               Expanded(
                   child: MainContentSection(
-                      favouriteHabitsList, todosList, toDoHistory)),
+                      favouriteHabitsList, todosList, toDoHistory,_handleToDoChange)),
             if (_selectedIndex == 1) // Show to-do list only when index is 1
               Expanded(
-                  child: ToDoListSection(favouriteHabitsList, _handleToDoChange,
-                      _handleStartActivity)),
+                  child: ToDoListSection(favouriteHabitsList, _handleToDoChange)),
           ],
         ),
       ),
@@ -159,7 +158,5 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     _loadTodosFromDatabase();
   }
 
-  void _handleStartActivity(int id) async {
-    //go to the related screen
-  }
+
 }

@@ -7,13 +7,13 @@ import '../todo.dart';
 class ToDoItem extends StatelessWidget {
   final ToDo todo;
   final onToDoChanged;
-  final onStartActivity;
+  //final onStartActivity;
 
   const ToDoItem({
     Key? key,
     required this.todo,
     required this.onToDoChanged,
-    required this.onStartActivity,
+    //required this.onStartActivity,
   }) : super(key: key);
 
   @override

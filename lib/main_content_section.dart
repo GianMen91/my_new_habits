@@ -8,9 +8,10 @@ class MainContentSection extends StatefulWidget {
   final List<ToDo> favouriteHabitsList;
   final List<ToDo> todosList;
   final List<ToDoHistory> toDoHistory;
+  final Function(ToDo) handleToDoChange;
 
   const MainContentSection(
-      this.favouriteHabitsList, this.todosList, this.toDoHistory,
+      this.favouriteHabitsList, this.todosList, this.toDoHistory, this.handleToDoChange,
       {Key? key})
       : super(key: key);
 
