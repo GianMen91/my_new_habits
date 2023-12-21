@@ -50,7 +50,6 @@ class _SettingsState extends State<Settings> {
                       IconButton(
                         icon: const Icon(Icons.arrow_back),
                         onPressed: () async {
-
                           for (ToDo todo in todosList) {
                             await DatabaseHelper.instance
                                 .updateFavouriteStatus(todo);
@@ -60,7 +59,6 @@ class _SettingsState extends State<Settings> {
                           widget.onFavouriteChange();
                         },
                       ),
-
                       const Text(
                         'Settings',
                         style: TextStyle(
@@ -75,12 +73,10 @@ class _SettingsState extends State<Settings> {
                     padding: EdgeInsets.only(
                         right: 15, left: 15, top: 10, bottom: 20),
                     child: Text(
-                      'Choose the habits you want to follow and click on the save button to save the changes',
-                      /*style: TextStyle(
-                                  color: Colors.lightBlue,
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
-                                ),*/
+                      'Choose the habits you want to follow:',
+                      style: TextStyle(
+                        fontSize: 17,
+                      ),
                     ),
                   ),
                   Expanded(
@@ -116,7 +112,8 @@ class _SettingsState extends State<Settings> {
                                 ),
                                 trailing: Container(
                                   padding: const EdgeInsets.all(0),
-                                  margin: const EdgeInsets.symmetric(vertical: 12),
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 12),
                                   height: 35,
                                   width: 35,
                                   decoration: BoxDecoration(
@@ -131,8 +128,7 @@ class _SettingsState extends State<Settings> {
                                       _dialogBuilder(context, todo);
                                     },
                                   ),
-                                )
-                            ),
+                                )),
                           )
                       ],
                     ),
@@ -166,12 +162,10 @@ class _SettingsState extends State<Settings> {
     );
   }
 
-
   void _onChecked(ToDo todo) async {
     setState(() {
       todo.isFavourite = !todo.isFavourite;
     });
     widget.onFavouriteChange(); // Notify the parent widget about the change
   }
-
 }
