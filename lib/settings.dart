@@ -166,9 +166,12 @@ class _SettingsState extends State<Settings> {
     );
   }
 
+
   void _onChecked(ToDo todo) async {
     setState(() {
       todo.isFavourite = !todo.isFavourite;
     });
+    widget.onFavouriteChange(); // Notify the parent widget about the change
   }
+
 }
