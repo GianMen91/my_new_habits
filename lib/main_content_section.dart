@@ -304,13 +304,16 @@ class _MainContentSectionState extends State<MainContentSection> {
     var uniqueIds = <int>{};
 
     for (var todo in widget.toDoHistory) {
-      var todoDate = DateTime.parse(todo.changeDate);
-      var normalizedTodoDate =
-          DateTime(todoDate.year, todoDate.month, todoDate.day);
-      var normalizedDay = DateTime(day.year, day.month, day.day);
+      bool containSameID = widget.favouriteHabitsList.any((favTodo) => favTodo.id == todo.id);
+      if(containSameID){
+        var todoDate = DateTime.parse(todo.changeDate);
+        var normalizedTodoDate =
+        DateTime(todoDate.year, todoDate.month, todoDate.day);
+        var normalizedDay = DateTime(day.year, day.month, day.day);
 
-      if (normalizedTodoDate == normalizedDay) {
-        uniqueIds.add(todo.id);
+        if (normalizedTodoDate == normalizedDay) {
+          uniqueIds.add(todo.id);
+        }
       }
     }
 
