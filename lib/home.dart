@@ -84,7 +84,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        GreetingSection(),
+                        const Expanded(
+                          child: GreetingSection(),
+                        ),
                         const SizedBox(width: 60),
                         IconButton(
                           onPressed: () {
@@ -112,11 +114,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             ),
             if (_selectedIndex == 0) // Show main content only when index is 0
               Expanded(
-                  child: MainContentSection(
-                      favouriteHabitsList, todosList, toDoHistory,_handleToDoChange)),
+                  child: MainContentSection(favouriteHabitsList, todosList,
+                      toDoHistory, _handleToDoChange)),
             if (_selectedIndex == 1) // Show to-do list only when index is 1
               Expanded(
-                  child: ToDoListSection(favouriteHabitsList, _handleToDoChange)),
+                  child:
+                      ToDoListSection(favouriteHabitsList, _handleToDoChange)),
           ],
         ),
       ),
@@ -157,6 +160,4 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     await DatabaseHelper.instance.updateTodoStatus(todo);
     _loadTodosFromDatabase();
   }
-
-
 }

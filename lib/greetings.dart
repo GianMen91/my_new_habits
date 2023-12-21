@@ -9,7 +9,7 @@ class GreetingSection extends StatelessWidget {
       getGreeting(),
       style: const TextStyle(
         fontFamily: 'Inter',
-        fontSize: 34,
+        fontSize: 32,
         fontWeight: FontWeight.bold,
       ),
     );
