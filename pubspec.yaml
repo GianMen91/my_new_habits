@@ -64,11 +64,12 @@ flutter:
 
   assets:
     - assets/
+    - assets/images/
 
   fonts:
      - family: Niconne
        fonts:
-         - asset: fonts/Niconne-Regular.ttf
+         - asset: assets/fonts/Niconne-Regular.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
