@@ -66,9 +66,9 @@ flutter:
     - assets/
 
   fonts:
-     - family: The Sally
+     - family: Niconne
        fonts:
-         - asset: fonts/The Sally.ttf
+         - asset: fonts/Niconne-Regular.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
