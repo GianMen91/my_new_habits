@@ -148,18 +148,20 @@ class _SettingsState extends State<Settings> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(todo.todoText, style: const TextStyle(
-            fontFamily: 'Niconne',
-            fontSize: 32,
-            fontWeight: FontWeight.bold,
-          )),
+          title: Text(todo.todoText,
+              style: const TextStyle(
+                fontFamily: 'Niconne',
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+              )),
           content: Text(details[todo.id - 1], textAlign: TextAlign.justify),
           actions: <Widget>[
             TextButton(
               child: const Text('Close',
                   style: TextStyle(
-                fontWeight: FontWeight.bold, color: boldTextColor,
-              )),
+                    fontWeight: FontWeight.bold,
+                    color: boldTextColor,
+                  )),
               onPressed: () {
                 Navigator.of(context).pop();
               },
