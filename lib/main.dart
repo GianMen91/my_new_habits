@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:newmehabits2/costants/constants.dart';
-import 'package:newmehabits2/services/notification_service.dart';
-import 'package:timezone/data/latest.dart' as tz;
-
+import 'costants/constants.dart';
 import 'home.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  NotificationService().initNotification();
-  tz.initializeTimeZones();
   runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
     //title: 'App Title',
