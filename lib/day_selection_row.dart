@@ -29,7 +29,7 @@ class DaySelectionRow extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
                     color: (currentDayOfWeek == i + 1)
-                        ? const Color(0xFFFFCCB4)
+                        ? selectedColor
                         : null,
                   ),
                   child: Column(
