@@ -124,7 +124,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
+        backgroundColor: bottomNavigationBarColor,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

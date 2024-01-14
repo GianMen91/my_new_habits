@@ -264,9 +264,6 @@ class _MainContentSectionState extends State<MainContentSection> {
           toY: isTouched ? y + 1 : y,
           color: isTouched ? touchedBarColor : barColor,
           width: width,
-          borderSide: isTouched
-              ? const BorderSide(color: touchedBarColorDarker)
-              : const BorderSide(color: selectedColor, width: 0),
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
             toY: widget.favouriteHabitsList.length.toDouble(),
