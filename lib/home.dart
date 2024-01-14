@@ -136,7 +136,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: selectedColor,
+        selectedItemColor: boldTextColor,
         onTap: _onItemTapped,
       ),
     );

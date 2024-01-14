@@ -158,7 +158,7 @@ class _SettingsState extends State<Settings> {
             TextButton(
               child: const Text('Close',
                   style: TextStyle(
-                fontWeight: FontWeight.bold, color: selectedColor,
+                fontWeight: FontWeight.bold, color: boldTextColor,
               )),
               onPressed: () {
                 Navigator.of(context).pop();
