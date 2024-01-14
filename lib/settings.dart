@@ -62,8 +62,9 @@ class _SettingsState extends State<Settings> {
                       const Text(
                         'Settings',
                         style: TextStyle(
-                          fontFamily: 'Niconne',
-                          fontSize: 32,
+                          //fontFamily: 'Niconne',
+                          //fontSize: 32,
+                          fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
