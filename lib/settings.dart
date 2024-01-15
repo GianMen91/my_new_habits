@@ -162,34 +162,59 @@ class _SettingsState extends State<Settings> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Add New Habit'),
+          title: const Text('Add New Habit',
+              style: TextStyle(
+                fontFamily: 'Niconne',
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+              )),
           content: TextField(
             controller: habitController,
-            decoration: InputDecoration(labelText: 'Enter the new habit'),
+            style: const TextStyle(color: Colors.black),
+            // Change text color as needed
+            decoration: const InputDecoration(
+              labelText: 'Enter the new habit',
+              labelStyle: TextStyle(color: Colors.black),
+              // Change label text color
+              focusedBorder: UnderlineInputBorder(
+                borderSide:
+                    BorderSide(color: Colors.black), // Change underline color
+              ),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey),
+              ),
+            ),
           ),
           actions: [
-            FlatButton(
+            TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: boldTextColor,
+                  )),
             ),
-            FlatButton(
-              onPressed: () async {
-                String newHabitText = habitController.text.trim();
+            TextButton(
+                onPressed: () async {
+                  String newHabitText = habitController.text.trim();
 
-                if (newHabitText.isNotEmpty) {
-                  // Add new habit to the database
-                  await DatabaseHelper.instance.addNewHabit(newHabitText);
+                  if (newHabitText.isNotEmpty) {
+                    // Add new habit to the database
+                    await DatabaseHelper.instance.addNewHabit(newHabitText);
 
-                  // Reload the list of habits
-                  _reloadHabitsList();
+                    // Reload the list of habits
+                    _reloadHabitsList();
 
-                  Navigator.pop(context); // Close the dialog
-                }
-              },
-              child: Text('Add'),
-            ),
+                    Navigator.pop(context); // Close the dialog
+                  }
+                },
+                child: const Text('Add',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: boldTextColor,
+                    ))),
           ],
         );
       },
