@@ -95,41 +95,46 @@ class _SettingsState extends State<Settings> {
                           Container(
                             margin: const EdgeInsets.only(bottom: 5),
                             child: ListTile(
-                                onTap: () {
-                                  _onChecked(todo);
-                                },
-                                leading: Icon(
-                                  todo.isFavourite
-                                      ? Icons.check_box
-                                      : Icons.check_box_outline_blank,
-                                  color: selectedColor,
+                              onTap: () {
+                                _onChecked(todo);
+                              },
+                              leading: Icon(
+                                todo.isFavourite
+                                    ? Icons.check_box
+                                    : Icons.check_box_outline_blank,
+                                color: selectedColor,
+                              ),
+                              title: Text(
+                                todo.todoText,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
                                 ),
-                                title: Text(
-                                  todo.todoText,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                trailing: Container(
-                                  padding: const EdgeInsets.all(0),
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 12),
-                                  height: 35,
-                                  width: 35,
-                                  decoration: BoxDecoration(
-                                    color: selectedColor,
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: IconButton(
-                                    color: Colors.white,
-                                    iconSize: 18,
-                                    icon: const Icon(Icons.info_outline),
-                                    onPressed: () {
-                                      _dialogBuilder(context, todo);
-                                    },
-                                  ),
-                                )),
+                              ),
+                              trailing: (todo.id - 1 >= 0 &&
+                                      todo.id - 1 < details.length)
+                                  ? Container(
+                                      padding: const EdgeInsets.all(0),
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 12),
+                                      height: 35,
+                                      width: 35,
+                                      decoration: BoxDecoration(
+                                        color: selectedColor,
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child: IconButton(
+                                        color: Colors.white,
+                                        iconSize: 18,
+                                        icon: const Icon(Icons.info_outline),
+                                        onPressed: () {
+                                          var detail = details[todo.id - 1];
+                                          _dialogBuilder(todo.todoText, detail);
+                                        },
+                                      ),
+                                    )
+                                  : null,
+                            ),
                           ),
                       ],
                     ),
@@ -201,13 +206,12 @@ class _SettingsState extends State<Settings> {
     });
   }
 
-  Future<void> _dialogBuilder(BuildContext context, ToDo todo) {
+  Future<void> _dialogBuilder(String todoTitle, String detail) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        var detail = details[todo.id - 1];
         return AlertDialog(
-          title: Text(todo.todoText,
+          title: Text(todoTitle,
               style: const TextStyle(
                 fontFamily: 'Niconne',
                 fontSize: 32,
