@@ -130,9 +130,16 @@ class _SettingsState extends State<Settings> {
                                     },
                                   ),
                                 )),
-                          )
+                          ),
                       ],
                     ),
+                  ),
+                  FloatingActionButton.small(
+                    backgroundColor: selectedColor,
+                    onPressed: () {
+                      _showAddHabitDialog(context);
+                    },
+                    child: const Icon(Icons.add),
                   ),
                 ],
               ),
@@ -143,10 +150,62 @@ class _SettingsState extends State<Settings> {
     );
   }
 
+  void _showAddHabitDialog(BuildContext context) {
+    TextEditingController habitController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Add New Habit'),
+          content: TextField(
+            controller: habitController,
+            decoration: InputDecoration(labelText: 'Enter the new habit'),
+          ),
+          actions: [
+            FlatButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Cancel'),
+            ),
+            FlatButton(
+              onPressed: () async {
+                String newHabitText = habitController.text.trim();
+
+                if (newHabitText.isNotEmpty) {
+                  // Add new habit to the database
+                  await DatabaseHelper.instance.addNewHabit(newHabitText);
+
+                  // Reload the list of habits
+                  _reloadHabitsList();
+
+                  Navigator.pop(context); // Close the dialog
+                }
+              },
+              child: Text('Add'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _reloadHabitsList() async {
+    // Reload the list of habits from the database
+    List<ToDo> updatedHabits = await DatabaseHelper.instance.getTodos();
+
+    // Update the state to trigger a rebuild of the widget
+    setState(() {
+      todosList = updatedHabits;
+    });
+  }
+
   Future<void> _dialogBuilder(BuildContext context, ToDo todo) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
+        var detail = details[todo.id - 1];
         return AlertDialog(
           title: Text(todo.todoText,
               style: const TextStyle(
@@ -154,7 +213,7 @@ class _SettingsState extends State<Settings> {
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
               )),
-          content: Text(details[todo.id - 1], textAlign: TextAlign.justify),
+          content: Text(detail, textAlign: TextAlign.justify),
           actions: <Widget>[
             TextButton(
               child: const Text('Close',

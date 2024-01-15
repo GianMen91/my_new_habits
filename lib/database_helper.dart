@@ -71,6 +71,22 @@ class DatabaseHelper {
   ''');
   }
 
+  Future<void> addNewHabit(String habitText) async {
+    final db = await database;
+    final now = DateTime.now();
+
+    // Insert a new row into the 'todos' table
+    await db.insert(
+      'todos',
+      {
+        'todoText': habitText,
+        'isDone': 0,
+        'isFavourite': 0,
+        'recordDate': now.toIso8601String(),
+      },
+    );
+  }
+
   Future<List<ToDo>> getTodos() async {
     final db = await database;
     final maps = await db.query('todos');
