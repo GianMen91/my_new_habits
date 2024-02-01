@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'costants/constants.dart';
 import 'home.dart';
 
 void main() {
@@ -26,19 +27,19 @@ class _MyAppState extends State {
         const Duration(seconds: 3),
         () => Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const Home()),
+              MaterialPageRoute(builder: (context) => const HomePageWidget()),
             ));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlue,
+      backgroundColor: selectedColor,
       body: Column(
         children: <Widget>[
           Expanded(
             child: Center(
-                child: Image.asset("assets/logo.png",
+                child: Image.asset("assets/images/logo.png",
                     height: 200, width: 200, fit: BoxFit.contain)),
           ),
           const Align(

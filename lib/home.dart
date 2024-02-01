@@ -1,28 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:newmehabits2/settings.dart';
-import 'package:newmehabits2/todo_history.dart';
+import 'day_selection_row.dart';
+import 'greetings.dart';
+import 'main_content_section.dart';
+import 'todo_list_section.dart';
+import 'costants/constants.dart';
 import 'todo.dart';
-import 'todo_item.dart';
 import 'database_helper.dart';
-import 'statistic_bar.dart';
+import 'settings.dart';
+import 'todo_history.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class HomePageWidget extends StatefulWidget {
+  const HomePageWidget({Key? key}) : super(key: key);
 
   @override
-  State<Home> createState() => _HomeState();
+  _HomePageWidgetState createState() => _HomePageWidgetState();
 }
 
-class _HomeState extends State<Home> {
+class _HomePageWidgetState extends State<HomePageWidget> {
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  List<ToDo> favouriteHabitsList = [];
+
   List<ToDo> todosList = [];
   List<ToDoHistory> toDoHistory = [];
   String todayDate = '';
+
+  final Duration animDuration = const Duration(milliseconds: 250);
+
+  int touchedIndex = -1;
+
+  bool isPlaying = false;
 
   @override
   void initState() {
     _loadTodosFromDatabase();
     _loadTodayDate();
     _resetCheckboxesIfNewDay();
+
     super.initState();
   }
 
@@ -32,6 +46,8 @@ class _HomeState extends State<Home> {
     setState(() {
       todosList = todos;
       toDoHistory = todoHistory;
+      favouriteHabitsList =
+          todosList.where((habit) => habit.isFavourite).toList();
     });
   }
 
@@ -41,99 +57,89 @@ class _HomeState extends State<Home> {
         "${now.day.toString().padLeft(2, '0')}.${now.month.toString().padLeft(2, '0')}.${now.year.toString()}";
   }
 
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<ToDo> favouriteHabitsList =
-        todosList.where((habit) => habit.isFavourite).toList();
-
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        actions: <Widget>[
-          IconButton(
-              icon: const Icon(Icons.bar_chart),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          StatisticBar(toDoHistory: toDoHistory, favouriteHabitsListSize:favouriteHabitsList.length)),
-                );
-              }),
-          IconButton(
-              icon: const Icon(Icons.settings),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>  Settings(onFavouriteChange: _loadTodosFromDatabase)),
-                );
-              }),
-        ],
-      ),
-      body: Stack(
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 15,
-            ),
-            child: Column(
-              children: [
-                Expanded(
-                  child: ListView(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(
-                          top: 20,
-                          bottom: 20,
+      key: scaffoldKey,
+      backgroundColor: backgroundColor,
+      body: SafeArea(
+        top: true,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        const Expanded(
+                          child: GreetingSection(),
                         ),
-                        child: Column(
-                          children: [
-                            const Text(
-                              'Your daily good habits',
-                              style: TextStyle(
-                                color: Colors.lightBlue,
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              'Today is $todayDate',
-                              // Display the formatted date
-                              style: const TextStyle(
-                                color: Colors.lightBlue,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
+                        const SizedBox(width: 60),
+                        IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Settings(
+                                      onFavouriteChange:
+                                          _loadTodosFromDatabase)),
+                            );
+                          },
+                          iconSize: 22,
+                          icon: new Icon(Icons.settings),
                         ),
-                      ),
-                      for (ToDo todo in favouriteHabitsList)
-                        ToDoItem(
-                          todo: todo,
-                          onToDoChanged: _handleToDoChange,
-                          onStartActivity: _handleStartActivity,
-                        ),
-                    ],
+                      ],
+                    ),
                   ),
-                )
-              ],
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                    child: DaySelectionRow(
+                        currentDayOfWeek: DateTime.now().weekday),
+                  ),
+                ],
+              ),
             ),
+            if (_selectedIndex == 0) // Show main content only when index is 0
+              Expanded(
+                  child: MainContentSection(favouriteHabitsList, todosList,
+                      toDoHistory, _handleToDoChange)),
+            if (_selectedIndex == 1) // Show to-do list only when index is 1
+              Expanded(
+                  child:
+                      ToDoListSection(favouriteHabitsList, _handleToDoChange)),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: bottomNavigationBarColor,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list),
+            label: 'To do List',
           ),
         ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: boldTextColor,
+        onTap: _onItemTapped,
       ),
     );
-  }
-
-  void _handleToDoChange(ToDo todo) async {
-    todo.isDone = !todo.isDone;
-    await DatabaseHelper.instance.updateTodoStatus(todo);
-    _loadTodosFromDatabase();
-  }
-
-  void _handleStartActivity(int id) async {
-    //go to the related screen
   }
 
   void _resetCheckboxesIfNewDay() async {
@@ -146,6 +152,12 @@ class _HomeState extends State<Home> {
         await DatabaseHelper.instance.updateTodoStatus(todo);
       }
     }
+    _loadTodosFromDatabase();
+  }
+
+  void _handleToDoChange(ToDo todo) async {
+    todo.isDone = !todo.isDone;
+    await DatabaseHelper.instance.updateTodoStatus(todo);
     _loadTodosFromDatabase();
   }
 }

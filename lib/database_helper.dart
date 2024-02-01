@@ -57,8 +57,8 @@ class DatabaseHelper {
       (4, 'Make exercises', 0, 0,'${now.toIso8601String()}'),
       (5, 'Meditate', 0, 0,'${now.toIso8601String()}'),
       (6, 'Create a proper sleep schedule', 0, 1,'${now.toIso8601String()}'),
-      (7, 'Take a 30-minute walk', 0, 1,'${now.toIso8601String()}'),
-      (8, 'Read 10 pages a day', 0, 1,'${now.toIso8601String()}'),
+      (7, 'Make a walk', 0, 1,'${now.toIso8601String()}'),
+      (8, 'Read a book', 0, 1,'${now.toIso8601String()}'),
       (9, 'Limit screen time', 0, 1,'${now.toIso8601String()}'),
       (10, 'Drink 2lt water', 0, 1,'${now.toIso8601String()}'),
       (11, 'Limit Caffeine Intake', 0, 0,'${now.toIso8601String()}'),
@@ -69,6 +69,22 @@ class DatabaseHelper {
       (16, 'Dedicate Time to Your Hobby', 0, 1,'${now.toIso8601String()}'),
       (17, 'Practice Yoga', 0, 0,'${now.toIso8601String()}')
   ''');
+  }
+
+  Future<void> addNewHabit(String habitText) async {
+    final db = await database;
+    final now = DateTime.now();
+
+    // Insert a new row into the 'todos' table
+    await db.insert(
+      'todos',
+      {
+        'todoText': habitText,
+        'isDone': 0,
+        'isFavourite': 0,
+        'recordDate': now.toIso8601String(),
+      },
+    );
   }
 
   Future<List<ToDo>> getTodos() async {
