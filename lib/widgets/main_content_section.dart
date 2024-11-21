@@ -1,8 +1,9 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'costants/constants.dart';
-import 'todo.dart';
-import 'todo_history.dart';
+import '../costants/constants.dart';
+
+import '../models/todo.dart';
+import '../models/todo_history.dart';
 
 class MainContentSection extends StatefulWidget {
   final List<ToDo> favouriteHabitsList;
@@ -30,7 +31,6 @@ class _MainContentSectionState extends State<MainContentSection> {
     return SingleChildScrollView(
       child: widget.favouriteHabitsList.isNotEmpty
           ? Column(
-              mainAxisSize: MainAxisSize.max,
               children: [
                 Container(
                   height: 131,
@@ -38,12 +38,10 @@ class _MainContentSectionState extends State<MainContentSection> {
                   child: Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 20),
                     child: Row(
-                      mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Column(
-                          mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -99,14 +97,14 @@ class _MainContentSectionState extends State<MainContentSection> {
                 ),
               ],
             )
-          : Column(
+          : const Column(
               children: [
                 SizedBox(height: 20),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: EdgeInsets.symmetric(horizontal: 16),
                   child: Align(
                     alignment: Alignment.centerLeft, // Align to the left
-                    child: const Text(
+                    child: Text(
                       "Your todo list is empty!",
                       style: TextStyle(
                         fontSize: 15,
@@ -222,12 +220,12 @@ class _MainContentSectionState extends State<MainContentSection> {
     // Calculate the start and end dates for the past week (Monday to Sunday)
     final now = DateTime.now();
     final lastMonday = now.subtract(Duration(days: now.weekday - 1));
-    final nextSunday = lastMonday.add(Duration(days: 6));
+    final nextSunday = lastMonday.add(const Duration(days: 6));
 
 // Adjust to start from the current week if today is Sunday
     if (now.weekday == 7) {
-      lastMonday.add(Duration(days: 7));
-      nextSunday.add(Duration(days: 7));
+      lastMonday.add(const Duration(days: 7));
+      nextSunday.add(const Duration(days: 7));
     }
 
     // Iterate through todos history and calculate completed tasks for each day of the past week

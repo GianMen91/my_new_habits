@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'costants/constants.dart';
-import 'todo.dart';
-import 'database_helper.dart';
+import '../costants/constants.dart';
+import '../helpers/database_helper.dart';
+import '../models/todo.dart';
 
 DateTime scheduleTime = DateTime.now();
 
 class Settings extends StatefulWidget {
-  final onFavouriteChange;
+  final Future<void> Function() onFavouriteChange;
 
   const Settings({Key? key, required this.onFavouriteChange}) : super(key: key);
 
@@ -86,8 +86,8 @@ class _SettingsState extends State<Settings> {
                           margin: const EdgeInsets.only(
                             bottom: 20,
                           ),
-                          child: Column(
-                            children: const [],
+                          child: const Column(
+                            
                           ),
                         ),
                         for (ToDo todo in todosList)
@@ -110,7 +110,6 @@ class _SettingsState extends State<Settings> {
                                   color: Colors.black,
                                 ),
                               ),
-                              trailing: null,
                             ),
                           ),
                       ],
@@ -154,8 +153,7 @@ class _SettingsState extends State<Settings> {
               labelStyle: TextStyle(color: Colors.black),
               // Change label text color
               focusedBorder: UnderlineInputBorder(
-                borderSide:
-                    BorderSide(color: Colors.black), // Change underline color
+                
               ),
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey),
@@ -206,35 +204,6 @@ class _SettingsState extends State<Settings> {
     setState(() {
       todosList = updatedHabits;
     });
-  }
-
-  Future<void> _dialogBuilder(String todoTitle, String detail) {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(todoTitle,
-              style: const TextStyle(
-                fontFamily: 'Niconne',
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-              )),
-          content: Text(detail, textAlign: TextAlign.justify),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Close',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: boldTextColor,
-                  )),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 
   void _onChecked(ToDo todo) async {

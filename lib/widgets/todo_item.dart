@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:newmehabits2/costants/constants.dart';
-import '../todo.dart';
+import '../models/todo.dart';
 
 class ToDoItem extends StatelessWidget {
   final ToDo todo;
-  final onToDoChanged;
-  //final onStartActivity;
+  final void Function(ToDo) onToDoChanged;
 
   const ToDoItem({
     Key? key,

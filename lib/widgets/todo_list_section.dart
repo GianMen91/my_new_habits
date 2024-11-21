@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'todo.dart';
-import 'widgets/todo_item.dart';
+import '../models/todo.dart';
+import 'todo_item.dart';
 
 class ToDoListSection extends StatelessWidget {
   final List<ToDo> favouriteHabitsList;

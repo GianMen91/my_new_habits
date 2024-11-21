@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'costants/constants.dart';
+import '../costants/constants.dart';
 
 class DaySelectionRow extends StatelessWidget {
   final int currentDayOfWeek;
 
-  const DaySelectionRow({required this.currentDayOfWeek});
+  const DaySelectionRow({Key? key, required this.currentDayOfWeek}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +14,10 @@ class DaySelectionRow extends StatelessWidget {
     // Calculate the start and end dates for the week
     DateTime startDate =
         DateTime.now().subtract(Duration(days: currentDayOfWeek - 1));
-    DateTime endDate = startDate.add(Duration(days: 6));
 
     return Padding(
         padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
         child: Row(
-            mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               for (int i = 0; i < 7; i++)
@@ -33,11 +31,10 @@ class DaySelectionRow extends StatelessWidget {
                         : null,
                   ),
                   child: Column(
-                    mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                         child: Text(
                           getDayName(i + 1),
                           style: TextStyle(

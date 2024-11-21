@@ -41,6 +41,7 @@ dependencies:
   flutter_lints: ^1.0.4
   lints: ^1.0.1
 
+  path: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

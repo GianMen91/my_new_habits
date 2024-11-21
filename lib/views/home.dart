@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'day_selection_row.dart';
-import 'greetings.dart';
-import 'main_content_section.dart';
-import 'todo_list_section.dart';
-import 'costants/constants.dart';
-import 'todo.dart';
-import 'database_helper.dart';
+import '../models/todo.dart';
+import '../widgets/day_selection_row.dart';
+import '../widgets/greetings.dart';
+import '../widgets/main_content_section.dart';
+
+import '../costants/constants.dart';
+
+import '../helpers/database_helper.dart';
+import '../widgets/todo_list_section.dart';
 import 'settings.dart';
-import 'todo_history.dart';
+import '../models/todo_history.dart';
 
 class HomePageWidget extends StatefulWidget {
   const HomePageWidget({Key? key}) : super(key: key);
@@ -71,18 +73,15 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       key: scaffoldKey,
       backgroundColor: backgroundColor,
       body: SafeArea(
-        top: true,
         child: Column(
           children: [
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
               child: Column(
-                mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
                     child: Row(
-                      mainAxisSize: MainAxisSize.max,
                       children: [
                         const Expanded(
                           child: GreetingSection(),
@@ -99,7 +98,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             );
                           },
                           iconSize: 22,
-                          icon: new Icon(Icons.settings),
+                          icon: const Icon(Icons.settings),
                         ),
                       ],
                     ),

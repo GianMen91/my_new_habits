@@ -1,8 +1,10 @@
-import 'package:newmehabits2/todo_history.dart';
+import 'package:newmehabits2/models/todo_history.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'todo.dart';
+
 import 'package:flutter/cupertino.dart';
+
+import '../models/todo.dart';
 
 class DatabaseHelper {
   static const _databaseName = 'todo_database.db';
@@ -113,7 +115,7 @@ class DatabaseHelper {
       where: 'changeDate >= ? AND changeDate < ?',
       whereArgs: [
         date.toIso8601String(),
-        date.add(Duration(days: 1)).toIso8601String()
+        date.add(const Duration(days: 1)).toIso8601String()
       ],
     );
 
