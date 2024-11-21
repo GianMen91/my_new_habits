@@ -90,7 +90,7 @@ class _HomePageViewState extends State<HomePageView> {
             padding: const EdgeInsets.only(top: 30.0),
             child: Row(
               children: [
-                const Expanded(child: GreetingSection()),
+                Expanded(child: GreetingSection(currentHour: DateTime.now().hour)),
                 const SizedBox(width: 60),
                 IconButton(
                   onPressed: _navigateToSettings,

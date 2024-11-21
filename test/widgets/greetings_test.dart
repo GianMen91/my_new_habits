@@ -1,32 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:my_new_habits/widgets/greetings.dart';
 
-class GreetingSection extends StatelessWidget {
-  const GreetingSection({Key? key}) : super(key: key);
+void main() {
+  testWidgets('GreetingSection displays the correct greeting based on time of day', (tester) async {
+    // Test for "Good Morning" (hours 5-11)
+    await testGreeting(tester, 8, 'Good Morning');  // Mocking 8 AM
+    await testGreeting(tester, 5, 'Good Morning');  // Mocking 5 AM (boundary)
+    await testGreeting(tester, 11, 'Good Morning'); // Mocking 11 AM (boundary)
 
-  @override
-  Widget build(BuildContext context) {
-    final greetingMessage = getGreeting();
+    // Test for "Good Afternoon" (hours 12-17)
+    await testGreeting(tester, 14, 'Good Afternoon'); // Mocking 2 PM
+    await testGreeting(tester, 12, 'Good Afternoon'); // Mocking 12 PM (boundary)
+    await testGreeting(tester, 17, 'Good Afternoon'); // Mocking 5 PM (boundary)
 
-    return Text(
-      greetingMessage,
-      style: const TextStyle(
-        fontFamily: 'Niconne',
-        fontSize: 32,
-        fontWeight: FontWeight.bold,
+    // Test for "Good Evening" (hours 18-4)
+    await testGreeting(tester, 18, 'Good Evening');  // Mocking 6 PM
+    await testGreeting(tester, 20, 'Good Evening');  // Mocking 8 PM
+    await testGreeting(tester, 23, 'Good Evening');  // Mocking 11 PM
+    await testGreeting(tester, 4, 'Good Evening');   // Mocking 4 AM (boundary)
+  });
+}
+
+// Helper function to test the greeting message
+Future<void> testGreeting(WidgetTester tester, int hour, String expectedGreeting) async {
+  await tester.pumpWidget(
+    MaterialApp(
+      home: Scaffold(
+        body: GreetingSection(currentHour: hour),
       ),
-    );
-  }
+    ),
+  );
 
-  // Get the appropriate greeting based on the time of day
-  String getGreeting() {
-    final hour = DateTime.now().hour;
-
-    if (hour >= 5 && hour < 12) {
-      return 'Good Morning';
-    } else if (hour >= 12 && hour < 18) {
-      return 'Good Afternoon';
-    } else {
-      return 'Good Evening';
-    }
-  }
+  // Verify if the correct greeting message is displayed
+  expect(find.text(expectedGreeting), findsOneWidget);
 }

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class GreetingSection extends StatelessWidget {
-  const GreetingSection({Key? key}) : super(key: key);
+  final int currentHour;
+
+  const GreetingSection({Key? key, required this.currentHour}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final greetingMessage = getGreeting();
+    final greetingMessage = getGreeting(currentHour);
 
     return Text(
       greetingMessage,
@@ -18,9 +20,7 @@ class GreetingSection extends StatelessWidget {
   }
 
   // Get the appropriate greeting based on the time of day
-  String getGreeting() {
-    final hour = DateTime.now().hour;
-
+  String getGreeting(int hour) {
     if (hour >= 5 && hour < 12) {
       return 'Good Morning';
     } else if (hour >= 12 && hour < 18) {
