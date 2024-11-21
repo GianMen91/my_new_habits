@@ -5,10 +5,10 @@ import '../models/todo.dart';
 import '../models/todo_history.dart';
 
 class MainContentSection extends StatefulWidget {
-  final List<ToDo> favouriteHabitsList;
-  final List<ToDo> todosList;
-  final List<ToDoHistory> toDoHistory;
-  final Function(ToDo) handleToDoChange;
+  final List<ToDo> favouriteHabitsList; // List of favourite habits
+  final List<ToDo> todosList; // List of all todos
+  final List<ToDoHistory> toDoHistory; // List of history for todos
+  final Function(ToDo) handleToDoChange; // Function to handle changes in todos
 
   const MainContentSection(
     this.favouriteHabitsList,
@@ -23,13 +23,15 @@ class MainContentSection extends StatefulWidget {
 }
 
 class _MainContentSectionState extends State<MainContentSection> {
-  int touchedIndex = -1;
+  int touchedIndex = -1; // Track the currently touched index in the chart
 
   // Use a static color to reduce the cost of re-creating colors.
-  final Color barBackgroundColor = Colors.grey.withOpacity(0.3);
+  final Color barBackgroundColor =
+      Colors.grey.withOpacity(0.3); // Background color of the bars
 
   @override
   Widget build(BuildContext context) {
+    // Calculate the percentage of completed tasks (daily goal achievement)
     var percentageValueOfAchieveDailyGoals = calculateDailyGoalPercentage();
 
     return SingleChildScrollView(
@@ -44,7 +46,7 @@ class _MainContentSectionState extends State<MainContentSection> {
     );
   }
 
-  // Break down into smaller methods to increase readability.
+  // Widget for the daily goal section, showing the completion percentage
   Widget _buildDailyGoalSection(int percentage) {
     return Container(
       height: 131,
@@ -62,15 +64,16 @@ class _MainContentSectionState extends State<MainContentSection> {
     );
   }
 
+  // Widget to display the daily goal text with the completion percentage
   Widget _buildDailyGoalText(int percentage) {
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('DAILY GOAL'),
+          const Text('DAILY GOAL'), // Label
           Text(
-            '$percentage%',
+            '$percentage%', // Completion percentage
             style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
           ),
         ],
@@ -78,6 +81,7 @@ class _MainContentSectionState extends State<MainContentSection> {
     );
   }
 
+  // Widget to display the bar chart for weekly goal achievement
   Widget _buildGoalAchievementBarChart() {
     return Container(
       height: 300,
@@ -92,7 +96,7 @@ class _MainContentSectionState extends State<MainContentSection> {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: BarChart(mainBarData()),
+                child: BarChart(mainBarData()), // Display the bar chart
               ),
             ),
             const SizedBox(height: 12),
@@ -102,6 +106,7 @@ class _MainContentSectionState extends State<MainContentSection> {
     );
   }
 
+  // Widget to show a message when the todo list is empty
   Widget _buildEmptyTodoMessage() {
     return const Column(
       children: [
@@ -111,7 +116,7 @@ class _MainContentSectionState extends State<MainContentSection> {
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              "Your todo list is empty!",
+              "Your todo list is empty!", // Message for empty list
               style: TextStyle(fontSize: 15),
             ),
           ),
@@ -120,7 +125,7 @@ class _MainContentSectionState extends State<MainContentSection> {
     );
   }
 
-  // Refactor to keep mainBarData clean and maintainable.
+  // Bar chart data configuration
   BarChartData mainBarData() {
     return BarChartData(
       barTouchData: BarTouchData(
@@ -128,7 +133,7 @@ class _MainContentSectionState extends State<MainContentSection> {
           tooltipBgColor: Colors.blueGrey,
           tooltipMargin: -10,
           getTooltipItem: (group, groupIndex, rod, rodIndex) {
-            return _buildTooltipItem(group.x, rod);
+            return _buildTooltipItem(group.x, rod); // Tooltip customization
           },
         ),
         touchCallback: (FlTouchEvent event, barTouchResponse) {
@@ -139,7 +144,8 @@ class _MainContentSectionState extends State<MainContentSection> {
               touchedIndex = -1;
               return;
             }
-            touchedIndex = barTouchResponse.spot!.touchedBarGroupIndex;
+            touchedIndex = barTouchResponse
+                .spot!.touchedBarGroupIndex; // Update touched index
           });
         },
       ),
@@ -154,7 +160,7 @@ class _MainContentSectionState extends State<MainContentSection> {
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            getTitlesWidget: getTitles,
+            getTitlesWidget: getTitles, // Day names on the bottom
             reservedSize: 38,
           ),
         ),
@@ -165,13 +171,16 @@ class _MainContentSectionState extends State<MainContentSection> {
         ),
       ),
       borderData: FlBorderData(show: false),
+      // Hide border
       barGroups: showingGroups(),
-      gridData: FlGridData(show: false),
+      // Display the bar groups
+      gridData: FlGridData(show: false), // Hide grid lines
     );
   }
 
+  // Customize the tooltip when touching a bar
   BarTooltipItem _buildTooltipItem(int x, BarChartRodData rod) {
-    String weekDay = _getWeekDayName(x);
+    String weekDay = _getWeekDayName(x); // Get the name of the day
     return BarTooltipItem(
       '$weekDay\n',
       const TextStyle(
@@ -183,6 +192,7 @@ class _MainContentSectionState extends State<MainContentSection> {
         TextSpan(
           text:
               '${(rod.toY - 1).round()} / ${widget.favouriteHabitsList.length}',
+          // Show the completed tasks
           style: const TextStyle(
             color: touchedBarColor,
             fontSize: 16,
@@ -193,6 +203,7 @@ class _MainContentSectionState extends State<MainContentSection> {
     );
   }
 
+  // Convert the index into a weekday name (e.g., 0 -> Monday)
   String _getWeekDayName(int index) {
     const weekDays = [
       'Monday',
@@ -206,31 +217,39 @@ class _MainContentSectionState extends State<MainContentSection> {
     return weekDays[index];
   }
 
+  // Generate bar chart data for each day of the week
   List<BarChartGroupData> showingGroups() {
-    final completedCounts = _calculateCompletedTasksPerDayForWeek();
+    final completedCounts =
+        _calculateCompletedTasksPerDayForWeek(); // Calculate completed tasks for each day
 
     return List.generate(7, (i) {
       return makeGroupData(i, completedCounts[i].toDouble(),
-          isTouched: i == touchedIndex);
+          isTouched: i == touchedIndex); // Create bars for each day
     });
   }
 
+  // Calculate completed tasks for each day of the current week
   List<int> _calculateCompletedTasksPerDayForWeek() {
-    var completedCounts = List<int>.filled(7, 0);
+    var completedCounts = List<int>.filled(
+        7, 0); // Initialize list to store completed counts for each day
 
     final now = DateTime.now();
-    final lastMonday = now.subtract(Duration(days: now.weekday - 1));
-    final nextSunday = lastMonday.add(const Duration(days: 6));
+    final lastMonday =
+        now.subtract(Duration(days: now.weekday - 1)); // Get last Monday
+    final nextSunday =
+        lastMonday.add(const Duration(days: 6)); // Get next Sunday
 
     for (var day = lastMonday;
         day.isBefore(nextSunday.add(const Duration(days: 1)));
         day = day.add(const Duration(days: 1))) {
-      completedCounts[day.weekday - 1] = calculateCompletedTaskPerDay(day);
+      completedCounts[day.weekday - 1] = calculateCompletedTaskPerDay(
+          day); // Calculate completed tasks for each day
     }
 
     return completedCounts;
   }
 
+  // Create a bar group for each day
   BarChartGroupData makeGroupData(
     int x,
     double y, {
@@ -239,7 +258,7 @@ class _MainContentSectionState extends State<MainContentSection> {
     double width = 22,
     List<int> showTooltips = const [],
   }) {
-    barColor ??= selectedColor;
+    barColor ??= selectedColor; // Set the bar color
     return BarChartGroupData(
       x: x,
       barRods: [
@@ -254,18 +273,23 @@ class _MainContentSectionState extends State<MainContentSection> {
           ),
         ),
       ],
-      showingTooltipIndicators: showTooltips,
+      showingTooltipIndicators: showTooltips, // Show tooltips for the bars
     );
   }
 
+  // Calculate the percentage of daily goal completion
   int calculateDailyGoalPercentage() {
-    int completedTasks = calculateCompletedTaskPerDay(DateTime.now());
-    int totalTasks = widget.favouriteHabitsList.length;
+    int completedTasks =
+        calculateCompletedTaskPerDay(DateTime.now()); // Completed tasks today
+    int totalTasks = widget.favouriteHabitsList.length; // Total favourite tasks
     double percentage =
         (totalTasks > 0) ? (completedTasks / totalTasks) * 100 : 0;
-    return percentage.isFinite ? percentage.round() : 0;
+    return percentage.isFinite
+        ? percentage.round()
+        : 0; // Return percentage rounded
   }
 
+  // Calculate the completed tasks for a given day
   int calculateCompletedTaskPerDay(DateTime day) {
     var uniqueIds = <int>{};
 
@@ -279,7 +303,7 @@ class _MainContentSectionState extends State<MainContentSection> {
         var normalizedDay = DateTime(day.year, day.month, day.day);
 
         if (normalizedTodoDate == normalizedDay) {
-          uniqueIds.add(todo.id);
+          uniqueIds.add(todo.id); // Add unique IDs for completed tasks
         }
       }
     }
@@ -287,6 +311,7 @@ class _MainContentSectionState extends State<MainContentSection> {
     return uniqueIds.length;
   }
 
+  // Get the titles for the bottom axis (day names)
   Widget getTitles(double value, TitleMeta meta) {
     const style = TextStyle(
       fontSize: 12,
@@ -317,6 +342,6 @@ class _MainContentSectionState extends State<MainContentSection> {
         text = 'Sun';
         break;
     }
-    return Text(text, style: style);
+    return Text(text, style: style); // Display the day name
   }
 }

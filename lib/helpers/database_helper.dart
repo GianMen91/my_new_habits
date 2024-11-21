@@ -19,8 +19,9 @@ class DatabaseHelper {
 
   // Getter for the database. If the database is not already initialized, it is created.
   Future<Database> get database async {
-    if (_database != null)
+    if (_database != null) {
       return _database!; // Return existing database if available
+    }
     _database = await _initDatabase(); // Initialize the database if not created
     return _database!;
   }
