@@ -1,4 +1,4 @@
-package com.newmehabits.project.newmehabits2;
+package com.mynewhabits.project;
 
 import io.flutter.embedding.android.FlutterActivity;
 
