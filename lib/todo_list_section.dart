@@ -6,8 +6,7 @@ class ToDoListSection extends StatelessWidget {
   final List<ToDo> favouriteHabitsList;
   final Function(ToDo) handleToDoChange;
 
-  const ToDoListSection(
-      this.favouriteHabitsList, this.handleToDoChange,
+  const ToDoListSection(this.favouriteHabitsList, this.handleToDoChange,
       {Key? key})
       : super(key: key);
 
@@ -23,12 +22,14 @@ class ToDoListSection extends StatelessWidget {
             textAlign: TextAlign.left,
           ),
         ),
-         Padding(
+        Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(16, 20, 0, 0),
           child: Text(
-            "YOU HAVE "+favouriteHabitsList.length.toString()+" TO DO",
+            favouriteHabitsList.isNotEmpty
+                ? "You have " + favouriteHabitsList.length.toString() + " to do"
+                : "Your todo list is empty!",
             textAlign: TextAlign.left,
-            style: const TextStyle(fontSize: 10),
+            style: const TextStyle(fontSize: 15),
           ),
         ),
         const SizedBox(height: 16),

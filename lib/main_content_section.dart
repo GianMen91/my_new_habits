@@ -28,74 +28,94 @@ class _MainContentSectionState extends State<MainContentSection> {
   Widget build(BuildContext context) {
     var percentageValueOfAchieveDailyGoals = calculateDailyGoalPercentage();
     return SingleChildScrollView(
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Container(
-            height: 131,
-            decoration: const BoxDecoration(),
-            child: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 20),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                        child: Column(
+      child: widget.favouriteHabitsList.isNotEmpty
+          ? Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Container(
+                  height: 131,
+                  decoration: const BoxDecoration(),
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 20),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              'DAILY GOAL',
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  16, 0, 0, 0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'DAILY GOAL',
+                                  ),
+                                  Text(
+                                      '${percentageValueOfAchieveDailyGoals.toString()}%',
+                                      style: const TextStyle(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold))
+                                ],
+                              ),
                             ),
-                            Text(
-                                '${percentageValueOfAchieveDailyGoals.toString()}%',
-                                style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold))
                           ],
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            height: 300, // Adjust the height as needed
-            decoration: const BoxDecoration(),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  const Text(
-                    'GOAL ACHIEVED THIS WEEK',
-                  ),
-                  const SizedBox(
-                    height: 36,
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: BarChart(mainBarData()),
+                      ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 12,
+                ),
+                Container(
+                  height: 300, // Adjust the height as needed
+                  decoration: const BoxDecoration(),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        const Text(
+                          'GOAL ACHIEVED THIS WEEK',
+                        ),
+                        const SizedBox(
+                          height: 36,
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: BarChart(mainBarData()),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
+                ),
+              ],
+            )
+          : Column(
+              children: [
+                SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Align(
+                    alignment: Alignment.centerLeft, // Align to the left
+                    child: const Text(
+                      "Your todo list is empty!",
+                      style: TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
     );
   }
 
