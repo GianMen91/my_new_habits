@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
+import '../costants/constants.dart';
 import '../models/todo.dart';
 import '../widgets/day_selection_row.dart';
 import '../widgets/greetings.dart';
 import '../widgets/main_content_section.dart';
-
-import '../costants/constants.dart';
-
 import '../helpers/database_helper.dart';
 import '../widgets/todo_list_section.dart';
 import 'settings_view.dart';
@@ -19,47 +17,26 @@ class HomePageView extends StatefulWidget {
 }
 
 class _HomePageViewState extends State<HomePageView> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  List<ToDo> favouriteHabitsList = [];
-
-  List<ToDo> todosList = [];
-  List<ToDoHistory> toDoHistory = [];
-  String todayDate = '';
-
-  final Duration animDuration = const Duration(milliseconds: 250);
-
-  int touchedIndex = -1;
-
-  bool isPlaying = false;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  List<ToDo> _todos = [];
+  List<ToDoHistory> _todoHistory = [];
+  int _selectedIndex = 0;
 
   @override
   void initState() {
-    _loadTodosFromDatabase();
-    _loadTodayDate();
-    _resetCheckboxesIfNewDay();
-
     super.initState();
+    _loadTodosFromDatabase();
+    _resetCheckboxesIfNewDay();
   }
 
   Future<void> _loadTodosFromDatabase() async {
     final todos = await DatabaseHelper.instance.getTodos();
     final todoHistory = await DatabaseHelper.instance.getToDoHistory();
     setState(() {
-      todosList = todos;
-      toDoHistory = todoHistory;
-      favouriteHabitsList =
-          todosList.where((habit) => habit.isFavourite).toList();
+      _todos = todos;
+      _todoHistory = todoHistory;
     });
   }
-
-  Future<void> _loadTodayDate() async {
-    final now = DateTime.now();
-    todayDate =
-        "${now.day.toString().padLeft(2, '0')}.${now.month.toString().padLeft(2, '0')}.${now.year.toString()}";
-  }
-
-  int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -67,84 +44,10 @@ class _HomePageViewState extends State<HomePageView> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: backgroundColor,
-      body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
-                    child: Row(
-                      children: [
-                        const Expanded(
-                          child: GreetingSection(),
-                        ),
-                        const SizedBox(width: 60),
-                        IconButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SettingsView(
-                                      onFavouriteChange:
-                                          _loadTodosFromDatabase)),
-                            );
-                          },
-                          iconSize: 22,
-                          icon: const Icon(Icons.settings),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                    child: DaySelectionRow(
-                        currentDayOfWeek: DateTime.now().weekday),
-                  ),
-                ],
-              ),
-            ),
-            if (_selectedIndex == 0) // Show main content only when index is 0
-              Expanded(
-                  child: MainContentSection(favouriteHabitsList, todosList,
-                      toDoHistory, _handleToDoChange)),
-            if (_selectedIndex == 1) // Show to-do list only when index is 1
-              Expanded(
-                  child:
-                      ToDoListSection(favouriteHabitsList, _handleToDoChange)),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: bottomNavigationBarColor,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'To do List',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: boldTextColor,
-        onTap: _onItemTapped,
-      ),
-    );
-  }
-
   void _resetCheckboxesIfNewDay() async {
     final todos = await DatabaseHelper.instance.getTodos();
     final now = DateTime.now();
-    for (ToDo todo in todos) {
+    for (var todo in todos) {
       final todoDate = DateTime.parse(todo.recordDate);
       if (todoDate.isBefore(DateTime(now.year, now.month, now.day))) {
         todo.isDone = false;
@@ -154,9 +57,103 @@ class _HomePageViewState extends State<HomePageView> {
     _loadTodosFromDatabase();
   }
 
-  void _handleToDoChange(ToDo todo) async {
+  void _handleTodoChange(ToDo todo) async {
     todo.isDone = !todo.isDone;
     await DatabaseHelper.instance.updateTodoStatus(todo);
     _loadTodosFromDatabase();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: _scaffoldKey,
+      backgroundColor: backgroundColor,
+      body: SafeArea(
+        child: Column(
+          children: [
+            _buildHeader(),
+            if (_selectedIndex == 0)
+              Expanded(child: _buildMainContent()),
+            if (_selectedIndex == 1)
+              Expanded(child: _buildTodoList()),
+          ],
+        ),
+      ),
+      bottomNavigationBar: _buildBottomNavigationBar(),
+    );
+  }
+
+  Widget _buildHeader() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 30.0),
+            child: Row(
+              children: [
+                const Expanded(child: GreetingSection()),
+                const SizedBox(width: 60),
+                IconButton(
+                  onPressed: _navigateToSettings,
+                  iconSize: 22,
+                  icon: const Icon(Icons.settings),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 20.0),
+            child: DaySelectionRow(currentDayOfWeek: DateTime.now().weekday),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _navigateToSettings() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SettingsView(
+          onFavouriteChange: _loadTodosFromDatabase,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMainContent() {
+    return MainContentSection(
+      _todos.where((todo) => todo.isFavourite).toList(),
+      _todos,
+      _todoHistory,
+      _handleTodoChange,
+    );
+  }
+
+  Widget _buildTodoList() {
+    return ToDoListSection(
+      _todos.where((todo) => todo.isFavourite).toList(),
+      _handleTodoChange,
+    );
+  }
+
+  Widget _buildBottomNavigationBar() {
+    return BottomNavigationBar(
+      backgroundColor: bottomNavigationBarColor,
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.list),
+          label: 'To-do List',
+        ),
+      ],
+      currentIndex: _selectedIndex,
+      selectedItemColor: boldTextColor,
+      onTap: _onItemTapped,
+    );
   }
 }
