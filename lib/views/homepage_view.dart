@@ -8,17 +8,17 @@ import '../costants/constants.dart';
 
 import '../helpers/database_helper.dart';
 import '../widgets/todo_list_section.dart';
-import 'settings.dart';
+import 'settings_view.dart';
 import '../models/todo_history.dart';
 
-class HomePageWidget extends StatefulWidget {
-  const HomePageWidget({Key? key}) : super(key: key);
+class HomePageView extends StatefulWidget {
+  const HomePageView({Key? key}) : super(key: key);
 
   @override
-  _HomePageWidgetState createState() => _HomePageWidgetState();
+  _HomePageViewState createState() => _HomePageViewState();
 }
 
-class _HomePageWidgetState extends State<HomePageWidget> {
+class _HomePageViewState extends State<HomePageView> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   List<ToDo> favouriteHabitsList = [];
@@ -92,7 +92,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Settings(
+                                  builder: (context) => SettingsView(
                                       onFavouriteChange:
                                           _loadTodosFromDatabase)),
                             );

@@ -5,16 +5,16 @@ import '../models/todo.dart';
 
 DateTime scheduleTime = DateTime.now();
 
-class Settings extends StatefulWidget {
+class SettingsView extends StatefulWidget {
   final Future<void> Function() onFavouriteChange;
 
-  const Settings({Key? key, required this.onFavouriteChange}) : super(key: key);
+  const SettingsView({Key? key, required this.onFavouriteChange}) : super(key: key);
 
   @override
-  State<Settings> createState() => _SettingsState();
+  State<SettingsView> createState() => _SettingsViewState();
 }
 
-class _SettingsState extends State<Settings> {
+class _SettingsViewState extends State<SettingsView> {
   List<ToDo> todosList = [];
 
   @override
