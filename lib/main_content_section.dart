@@ -10,8 +10,8 @@ class MainContentSection extends StatefulWidget {
   final List<ToDoHistory> toDoHistory;
   final Function(ToDo) handleToDoChange;
 
-  const MainContentSection(
-      this.favouriteHabitsList, this.todosList, this.toDoHistory, this.handleToDoChange,
+  const MainContentSection(this.favouriteHabitsList, this.todosList,
+      this.toDoHistory, this.handleToDoChange,
       {Key? key})
       : super(key: key);
 
@@ -50,36 +50,14 @@ class _MainContentSectionState extends State<MainContentSection> {
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                         child: Column(
-                          mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text(
                               'DAILY GOAL',
                             ),
-                            RichText(
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor,
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: percentageValueOfAchieveDailyGoals
-                                        .toString(),
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 60,
-                                        color: Colors.black),
-                                  ),
-                                  const TextSpan(
-                                    text: '%',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                      fontSize: 32,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
+                            Text(
+                                '${percentageValueOfAchieveDailyGoals.toString()}%',
+                                style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold))
                           ],
                         ),
                       ),
@@ -301,11 +279,12 @@ class _MainContentSectionState extends State<MainContentSection> {
     var uniqueIds = <int>{};
 
     for (var todo in widget.toDoHistory) {
-      bool containSameID = widget.favouriteHabitsList.any((favTodo) => favTodo.id == todo.id);
-      if(containSameID){
+      bool containSameID =
+          widget.favouriteHabitsList.any((favTodo) => favTodo.id == todo.id);
+      if (containSameID) {
         var todoDate = DateTime.parse(todo.changeDate);
         var normalizedTodoDate =
-        DateTime(todoDate.year, todoDate.month, todoDate.day);
+            DateTime(todoDate.year, todoDate.month, todoDate.day);
         var normalizedDay = DateTime(day.year, day.month, day.day);
 
         if (normalizedTodoDate == normalizedDay) {

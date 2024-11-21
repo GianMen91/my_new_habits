@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'costants/constants.dart';
-import 'costants/habits_info_costants.dart';
 import 'todo.dart';
 import 'database_helper.dart';
 
@@ -111,29 +110,7 @@ class _SettingsState extends State<Settings> {
                                   color: Colors.black,
                                 ),
                               ),
-                              trailing: (todo.id - 1 >= 0 &&
-                                      todo.id - 1 < details.length)
-                                  ? Container(
-                                      padding: const EdgeInsets.all(0),
-                                      margin: const EdgeInsets.symmetric(
-                                          vertical: 12),
-                                      height: 35,
-                                      width: 35,
-                                      decoration: BoxDecoration(
-                                        color: selectedColor,
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      child: IconButton(
-                                        color: Colors.white,
-                                        iconSize: 18,
-                                        icon: const Icon(Icons.info_outline),
-                                        onPressed: () {
-                                          var detail = details[todo.id - 1];
-                                          _dialogBuilder(todo.todoText, detail);
-                                        },
-                                      ),
-                                    )
-                                  : null,
+                              trailing: null,
                             ),
                           ),
                       ],
