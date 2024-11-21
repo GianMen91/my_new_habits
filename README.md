@@ -34,3 +34,7 @@
 ## Responsiveness
 
 The app is designed to work seamlessly across various screen sizes, providing a consistent and enjoyable experience on both small and large devices.
+
+## Future Enhancements
+
+Add more tests
