@@ -5,8 +5,10 @@ class GreetingSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final greetingMessage = getGreeting();
+
     return Text(
-      getGreeting(),
+      greetingMessage,
       style: const TextStyle(
         fontFamily: 'Niconne',
         fontSize: 32,
@@ -15,6 +17,7 @@ class GreetingSection extends StatelessWidget {
     );
   }
 
+  // Get the appropriate greeting based on the time of day
   String getGreeting() {
     final hour = DateTime.now().hour;
 

@@ -2,10 +2,9 @@ class ToDoHistory {
   int id;
   String changeDate;
 
-  // Add this field
   ToDoHistory({
     required this.id,
-    required this.changeDate, // Initialize this field
+    required this.changeDate,
   });
 
   Map<String, dynamic> toMap() {

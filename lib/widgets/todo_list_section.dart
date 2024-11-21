@@ -4,9 +4,9 @@ import 'todo_item.dart';
 
 class ToDoListSection extends StatelessWidget {
   final List<ToDo> favouriteHabitsList;
-  final Function(ToDo) handleToDoChange;
+  final Function(ToDo) handleToDoTapped;
 
-  const ToDoListSection(this.favouriteHabitsList, this.handleToDoChange,
+  const ToDoListSection(this.favouriteHabitsList, this.handleToDoTapped,
       {Key? key})
       : super(key: key);
 
@@ -40,7 +40,7 @@ class ToDoListSection extends StatelessWidget {
               for (ToDo todo in favouriteHabitsList)
                 ToDoItem(
                   todo: todo,
-                  onToDoChanged: handleToDoChange,
+                  onToDoTapped: handleToDoTapped,
                 ),
             ],
           ),

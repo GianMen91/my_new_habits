@@ -72,10 +72,8 @@ class _HomePageViewState extends State<HomePageView> {
         child: Column(
           children: [
             _buildHeader(),
-            if (_selectedIndex == 0)
-              Expanded(child: _buildMainContent()),
-            if (_selectedIndex == 1)
-              Expanded(child: _buildTodoList()),
+            if (_selectedIndex == 0) Expanded(child: _buildMainContent()),
+            if (_selectedIndex == 1) Expanded(child: _buildTodoList()),
           ],
         ),
       ),

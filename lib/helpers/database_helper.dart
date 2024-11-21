@@ -9,6 +9,7 @@ class DatabaseHelper {
   static const _databaseVersion = 1;
 
   DatabaseHelper._privateConstructor();
+
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
   static Database? _database;
 
@@ -110,7 +111,8 @@ class DatabaseHelper {
   Future<List<ToDoHistory>> getToDoHistoryForDate(DateTime date) async {
     final db = await database;
     final String dateStr = date.toIso8601String();
-    final String nextDayStr = date.add(Duration(days: 1)).toIso8601String();
+    final String nextDayStr =
+        date.add(const Duration(days: 1)).toIso8601String();
 
     final List<Map<String, dynamic>> maps = await db.query(
       'todo_history',

@@ -1,95 +1,80 @@
 import 'package:flutter/material.dart';
-
 import '../costants/constants.dart';
 
 class DaySelectionRow extends StatelessWidget {
   final int currentDayOfWeek;
 
-  const DaySelectionRow({Key? key, required this.currentDayOfWeek}) : super(key: key);
+  const DaySelectionRow({Key? key, required this.currentDayOfWeek})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    int currentDayOfWeek = DateTime.now().weekday;
-
-    // Calculate the start and end dates for the week
+    // Calculate the start date of the week (Monday)
     DateTime startDate =
         DateTime.now().subtract(Duration(days: currentDayOfWeek - 1));
 
     return Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              for (int i = 0; i < 7; i++)
-                Container(
-                  width: 43,
-                  height: 71,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    color: (currentDayOfWeek == i + 1)
-                        ? selectedColor
-                        : null,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                        child: Text(
-                          getDayName(i + 1),
-                          style: TextStyle(
-                            color: (currentDayOfWeek == i + 1)
-                                ? Colors.white
-                                : Colors.black,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
-                        child: Container(
-                          width: 35,
-                          height: 35,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: (currentDayOfWeek == i + 1)
-                                ? Colors.white
-                                : null,
-                          ),
-                          alignment: const AlignmentDirectional(0.00, 0.00),
-                          child: Text(
-                            getDayNumber(startDate, i + 1).toString(),
-                            style: TextStyle(
-                              color: (currentDayOfWeek == i + 1)
-                                  ? selectedColor
-                                  : Colors.black,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+      padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: List.generate(7, (index) {
+          int dayOfWeek = index + 1; // Days range from 1 (Monday) to 7 (Sunday)
+          bool isSelected = currentDayOfWeek == dayOfWeek;
+
+          return Container(
+            width: 43,
+            height: 71,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              color: isSelected ? selectedColor : null,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                  child: Text(
+                    getDayName(dayOfWeek),
+                    style: TextStyle(
+                      color: isSelected ? Colors.white : Colors.black,
+                    ),
                   ),
                 ),
-            ]));
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
+                  child: Container(
+                    width: 35,
+                    height: 35,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: isSelected ? Colors.white : null,
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      getDayNumber(startDate, dayOfWeek).toString(),
+                      style: TextStyle(
+                        color: isSelected ? selectedColor : Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }),
+      ),
+    );
   }
 
+  // Calculate the correct day number considering the start date of the week
   int getDayNumber(DateTime startDate, int dayOfWeek) {
-    // Calculate the day number for the given day of the week
-    int dayNumber = startDate.day + dayOfWeek - startDate.weekday;
-
-    // If the calculated day number is less than 1, it means we are in the previous month
-    // Adjust the day number accordingly
-    if (dayNumber < 1) {
-      DateTime previousMonth =
-          startDate.subtract(Duration(days: startDate.day));
-      dayNumber = previousMonth.day + dayNumber;
-    }
-
-    return dayNumber;
+    DateTime targetDate = startDate.add(Duration(days: dayOfWeek - 1));
+    return targetDate.day;
   }
 
-  String getDayName(int dayNumber) {
-    switch (dayNumber) {
+  // Get the short name of the day of the week
+  String getDayName(int dayOfWeek) {
+    switch (dayOfWeek) {
       case 1:
         return 'Mon';
       case 2:

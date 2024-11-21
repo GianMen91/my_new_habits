@@ -3,14 +3,14 @@ class ToDo {
   String todoText;
   bool isDone;
   bool isFavourite;
-  String recordDate; // Add this field
+  String recordDate;
 
   ToDo({
     required this.id,
     required this.todoText,
     this.isDone = false,
     this.isFavourite = false,
-    required this.recordDate, // Initialize this field
+    required this.recordDate,
   });
 
   Map<String, dynamic> toMap() {

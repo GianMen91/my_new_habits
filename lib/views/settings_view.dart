@@ -6,7 +6,8 @@ import '../models/todo.dart';
 class SettingsView extends StatefulWidget {
   final Future<void> Function() onFavouriteChange;
 
-  const SettingsView({Key? key, required this.onFavouriteChange}) : super(key: key);
+  const SettingsView({Key? key, required this.onFavouriteChange})
+      : super(key: key);
 
   @override
   State<SettingsView> createState() => _SettingsViewState();
@@ -66,7 +67,8 @@ class _SettingsViewState extends State<SettingsView> {
               },
               child: const Text(
                 'Cancel',
-                style: TextStyle(fontWeight: FontWeight.bold, color: boldTextColor),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: boldTextColor),
               ),
             ),
             TextButton(
@@ -82,7 +84,8 @@ class _SettingsViewState extends State<SettingsView> {
               },
               child: const Text(
                 'Add',
-                style: TextStyle(fontWeight: FontWeight.bold, color: boldTextColor),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: boldTextColor),
               ),
             ),
           ],
