@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:newmehabits2/costants/constants.dart';
+import '../costants/constants.dart';
 import '../models/todo.dart';
 
 class ToDoItem extends StatelessWidget {
