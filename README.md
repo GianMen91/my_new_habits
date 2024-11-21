@@ -22,7 +22,7 @@
 ## Content Attribution
 
 - **Font (Niconne)**: Used the Niconne font, available on [Google Fonts](https://fonts.google.com/specimen/Niconne). Designed by Vernon Adams.
-- 
+
 ## Technologies Used
 
 - **Flutter**: Framework for building natively compiled applications.
@@ -39,4 +39,4 @@ The app is designed to work seamlessly across various screen sizes, providing a 
 
 ## Future Enhancements
 
-Add more tests
+Add more tests.
