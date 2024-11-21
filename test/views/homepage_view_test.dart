@@ -29,7 +29,6 @@ void main() {
       ToDo(
           id: 1,
           todoText: 'Test ToDo',
-          isDone: false,
           isFavourite: true,
           recordDate: '2023-11-21'),
     ];
@@ -43,7 +42,7 @@ void main() {
 
     // Build the widget
     await tester.pumpWidget(
-      MaterialApp(
+      const MaterialApp(
         home: HomePageView(),
       ),
     );
@@ -68,7 +67,6 @@ void main() {
       ToDo(
           id: 1,
           todoText: 'Test ToDo',
-          isDone: false,
           isFavourite: true,
           recordDate: '2023-11-21'),
     ];

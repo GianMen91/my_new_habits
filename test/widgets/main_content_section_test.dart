@@ -6,7 +6,9 @@ import 'package:my_new_habits/models/todo.dart';
 import 'package:my_new_habits/models/todo_history.dart';
 
 void main() {
-  testWidgets('MainContentSection displays daily goal percentage and bar chart correctly', (tester) async {
+  testWidgets(
+      'MainContentSection displays daily goal percentage and bar chart correctly',
+      (tester) async {
     // Prepare mock data for testing
     List<ToDo> favouriteHabitsList = [
       ToDo(id: 1, todoText: 'Exercise', recordDate: ''),
@@ -15,12 +17,13 @@ void main() {
     ];
 
     List<ToDoHistory> toDoHistory = [
-      ToDoHistory(id: 1, changeDate: DateTime.now().toIso8601String()), // Assume completed task
+      ToDoHistory(id: 1, changeDate: DateTime.now().toIso8601String()),
+      // Assume completed task
       ToDoHistory(id: 2, changeDate: DateTime.now().toIso8601String()),
     ];
 
     // Mock function to handle ToDo change (for testing purposes)
-    Function(ToDo) handleToDoChange = (ToDo todo) {};
+    handleToDoChange(ToDo todo) {}
 
     // Build the widget tree
     await tester.pumpWidget(
@@ -28,7 +31,7 @@ void main() {
         home: Scaffold(
           body: MainContentSection(
             favouriteHabitsList,
-            [],
+            const [],
             toDoHistory,
             handleToDoChange,
           ),
@@ -39,10 +42,8 @@ void main() {
     // Check that the daily goal section is displayed
     expect(find.text('DAILY GOAL'), findsOneWidget);
 
-
     // Check that the goal achievement bar chart is displayed
     expect(find.byType(BarChart), findsOneWidget);
-
 
     expect(find.text('Your todo list is empty!'), findsNothing);
 
@@ -51,8 +52,8 @@ void main() {
       MaterialApp(
         home: Scaffold(
           body: MainContentSection(
-            [],
-            [],
+            const [],
+            const [],
             toDoHistory,
             handleToDoChange,
           ),
@@ -64,7 +65,8 @@ void main() {
     expect(find.text('Your todo list is empty!'), findsOneWidget);
   });
 
-  testWidgets('MainContentSection handles touch events on the bar chart', (tester) async {
+  testWidgets('MainContentSection handles touch events on the bar chart',
+      (tester) async {
     // Prepare mock data
     List<ToDo> favouriteHabitsList = [
       ToDo(id: 1, todoText: 'Exercise', recordDate: ''),
@@ -77,7 +79,7 @@ void main() {
       ToDoHistory(id: 2, changeDate: DateTime.now().toIso8601String()),
     ];
 
-    Function(ToDo) handleToDoChange = (ToDo todo) {};
+    handleToDoChange(ToDo todo) {}
 
     // Build the widget tree
     await tester.pumpWidget(
@@ -85,7 +87,7 @@ void main() {
         home: Scaffold(
           body: MainContentSection(
             favouriteHabitsList,
-            [],
+            const [],
             toDoHistory,
             handleToDoChange,
           ),

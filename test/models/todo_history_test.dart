@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:my_new_habits/models/todo_history.dart';
 
-
 void main() {
   group('ToDoHistory Model Tests', () {
     test('toMap() should convert ToDoHistory object to Map', () {

@@ -5,17 +5,19 @@ import 'package:my_new_habits/widgets/todo_list_section.dart'; // Adjust accordi
 import 'package:my_new_habits/models/todo.dart';
 
 void main() {
-  testWidgets('ToDoListSection displays correct number of items and triggers onTap callback', (tester) async {
+  testWidgets(
+      'ToDoListSection displays correct number of items and triggers onTap callback',
+      (tester) async {
     // Mock data for testing
     final todo1 = ToDo(
       id: 1,
       todoText: 'Complete the task 1',
-      isDone: false, recordDate: '',
+      recordDate: '',
     );
     final todo2 = ToDo(
       id: 2,
       todoText: 'Complete the task 2',
-      isDone: false, recordDate: '',
+      recordDate: '',
     );
     final favouriteHabitsList = [todo1, todo2];
 
@@ -52,7 +54,9 @@ void main() {
     expect(tappedToDo.todoText, 'Complete the task 1');
   });
 
-  testWidgets('ToDoListSection displays empty message when the to-do list is empty', (tester) async {
+  testWidgets(
+      'ToDoListSection displays empty message when the to-do list is empty',
+      (tester) async {
     // Empty list for testing
     final favouriteHabitsList = <ToDo>[];
 

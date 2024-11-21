@@ -4,12 +4,13 @@ import 'package:my_new_habits/widgets/todo_item.dart'; // Adjust according to yo
 import 'package:my_new_habits/models/todo.dart';
 
 void main() {
-  testWidgets('ToDoItem displays correctly and triggers onTap callback', (tester) async {
+  testWidgets('ToDoItem displays correctly and triggers onTap callback',
+      (tester) async {
     // Mock data for testing
     final todo = ToDo(
       id: 1,
       todoText: 'Complete the task',
-      isDone: false, recordDate: '',
+      recordDate: '',
     );
 
     bool isTapped = false;
@@ -46,12 +47,15 @@ void main() {
     expect(isTapped, true);
   });
 
-  testWidgets('ToDoItem shows checked checkbox and line-through when isDone is true', (tester) async {
+  testWidgets(
+      'ToDoItem shows checked checkbox and line-through when isDone is true',
+      (tester) async {
     // Mock data for testing
     final todo = ToDo(
       id: 2,
       todoText: 'Completed task',
-      isDone: true, recordDate: '',
+      isDone: true,
+      recordDate: '',
     );
 
     // Build the widget
