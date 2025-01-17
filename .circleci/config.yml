@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: cirrusci/flutter:3.13.5
+      - image: cirrusci/flutter
     steps:
       - checkout
       - run: flutter doctor -v    # Check Flutter/Dart versions
