@@ -1,18 +1,18 @@
 version: 2.1
 
 orbs:
-  flutter: circleci/flutter@2.7.0 # Use the latest version of the Flutter Orb
+  flutter: circleci/flutter@1.0.0 # Use the latest available version
 
 jobs:
   build_and_test:
     docker:
-      - image: cimg/base:stable # Base image; Orb handles Flutter setup
+      - image: cimg/base:stable # Base image; the orb handles Flutter setup
     steps:
       - checkout
       - flutter/install:
           flutter_version: '3.13.7' # Specify the Flutter version you need
       - flutter/pub-get          # Fetch dependencies
-      - flutter/pub-outdated     # Check outdated dependencies
+      - flutter/pub-outdated     # Check for outdated dependencies
       - flutter/test             # Run Flutter tests
       - flutter/build:
           type: apk
