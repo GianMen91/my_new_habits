@@ -9,8 +9,7 @@ class ToDoListSection extends StatelessWidget {
 
   // Constructor that initializes the ToDoListSection with the list of todos and the callback function
   const ToDoListSection(this.favouriteHabitsList, this.handleToDoTapped,
-      {Key? key})
-      : super(key: key);
+      {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +31,7 @@ class ToDoListSection extends StatelessWidget {
           padding: const EdgeInsetsDirectional.fromSTEB(16, 20, 0, 0),
           child: Text(
             favouriteHabitsList.isNotEmpty
-                ? "You have " + favouriteHabitsList.length.toString() + " to do"
+                ? "You have ${favouriteHabitsList.length} to do"
                 : "Your todo list is empty!",
             textAlign: TextAlign.left,
             style: const TextStyle(fontSize: 15),

@@ -9,10 +9,10 @@ class ToDoItem extends StatelessWidget {
 
   // Constructor that initializes the ToDoItem with a ToDo object and an onToDoTapped callback
   const ToDoItem({
-    Key? key,
+    super.key,
     required this.todo,
     required this.onToDoTapped,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
