@@ -6,11 +6,11 @@ orbs:
 jobs:
   build-and-test:
     docker:
-      - image: cimg/android:2024.01
+      - image: cimg/base:stable
     steps:
       - checkout
       - flutter/install_sdk:
-          version: 3.19.0
+          version: 3.27.2
       - run:
           name: Flutter doctor
           command: flutter doctor -v
