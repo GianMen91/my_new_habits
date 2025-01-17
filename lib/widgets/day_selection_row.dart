@@ -7,8 +7,7 @@ class DaySelectionRow extends StatelessWidget {
   final int
       currentDayOfWeek; // The current day of the week (1 for Monday, 7 for Sunday)
 
-  const DaySelectionRow({Key? key, required this.currentDayOfWeek})
-      : super(key: key);
+  const DaySelectionRow({super.key, required this.currentDayOfWeek});
 
   @override
   Widget build(BuildContext context) {

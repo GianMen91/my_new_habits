@@ -9,8 +9,7 @@ class SettingsView extends StatefulWidget {
   final Future<void> Function()
       onFavouriteChange; // Callback function to notify parent about favorite change
 
-  const SettingsView({Key? key, required this.onFavouriteChange})
-      : super(key: key);
+  const SettingsView({super.key, required this.onFavouriteChange});
 
   @override
   State<SettingsView> createState() => _SettingsViewState();

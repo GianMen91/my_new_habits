@@ -12,13 +12,13 @@ import '../models/todo_history.dart';
 // This widget represents the home page of the application, which displays a list of ToDo items
 // and allows the user to navigate to the to-do list or settings.
 class HomePageView extends StatefulWidget {
-  const HomePageView({Key? key}) : super(key: key);
+  const HomePageView({super.key});
 
   @override
-  _HomePageViewState createState() => _HomePageViewState();
+  HomePageViewState createState() => HomePageViewState();
 }
 
-class _HomePageViewState extends State<HomePageView> {
+class HomePageViewState extends State<HomePageView> {
   final GlobalKey<ScaffoldState> _scaffoldKey =
       GlobalKey<ScaffoldState>(); // Key for Scaffold
   List<ToDo> _todos = []; // List to store all to-do items

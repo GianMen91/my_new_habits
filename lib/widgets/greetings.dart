@@ -4,8 +4,7 @@ class GreetingSection extends StatelessWidget {
   final int
       currentHour; // The current hour of the day (e.g., 8 for 8 AM, 15 for 3 PM)
 
-  const GreetingSection({Key? key, required this.currentHour})
-      : super(key: key);
+  const GreetingSection({super.key, required this.currentHour});
 
   @override
   Widget build(BuildContext context) {

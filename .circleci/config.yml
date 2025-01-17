@@ -1,0 +1,31 @@
+version: 2.1
+
+orbs:
+  flutter: circleci/flutter@2.0
+
+jobs:
+  build-and-test:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - flutter/install_sdk:
+          version: 3.27.2
+      - run:
+          name: Flutter doctor
+          command: flutter doctor -v
+      - run:
+          name: Get dependencies
+          command: flutter pub get
+      - run:
+          name: Run analyzer
+          command: flutter analyze
+      - run:
+          name: Run tests
+          command: flutter test
+
+workflows:
+  version: 2
+  build-test:
+    jobs:
+      - build-and-test

@@ -15,8 +15,8 @@ class MainContentSection extends StatefulWidget {
     this.todosList,
     this.toDoHistory,
     this.handleToDoChange, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<MainContentSection> createState() => _MainContentSectionState();
@@ -130,7 +130,6 @@ class _MainContentSectionState extends State<MainContentSection> {
     return BarChartData(
       barTouchData: BarTouchData(
         touchTooltipData: BarTouchTooltipData(
-          tooltipBgColor: Colors.blueGrey,
           tooltipMargin: -10,
           getTooltipItem: (group, groupIndex, rod, rodIndex) {
             return _buildTooltipItem(group.x, rod); // Tooltip customization
@@ -150,12 +149,11 @@ class _MainContentSectionState extends State<MainContentSection> {
         },
       ),
       titlesData: FlTitlesData(
-        show: true,
         rightTitles: AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
+          sideTitles: SideTitles(),
         ),
         topTitles: AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
+          sideTitles: SideTitles(),
         ),
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
@@ -166,7 +164,7 @@ class _MainContentSectionState extends State<MainContentSection> {
         ),
         leftTitles: AxisTitles(
           sideTitles: SideTitles(
-            showTitles: false,
+            
           ),
         ),
       ),
