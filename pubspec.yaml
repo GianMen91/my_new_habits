@@ -40,9 +40,8 @@ dependencies:
   very_good_analysis: ^2.4.0
   flutter_lints: ^1.0.4
   lints: ^1.0.1
-
   path: any
-  mocktail: ^1.0.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
