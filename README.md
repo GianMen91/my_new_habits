@@ -2,7 +2,13 @@
 
 ## Overview
 
-**My New Habits** is a Flutter-based app designed to help users manage their daily habits and goals. It leverages **sqflite** for local storage. Use **CircleCI** for continuous integration and deployment. The app allows users to track their habits, view progress statistics, and mark completed tasks. With features like personalized greetings and an interactive bar chart for habit tracking, it helps users stay motivated and consistent with their daily routines.
+**My New Habits** is a Flutter-based app that allows users to track their habits, view progress statistics, and mark completed tasks. 
+With features like personalized greetings and an interactive bar chart for habit tracking, it helps users stay motivated and consistent with their daily routines. 
+
+- It leverages **sqflite** for local storage. 
+- It uses **CircleCI** for continuous integration and deployment.
+  
+The app 
 
 ## Screenshots
 
