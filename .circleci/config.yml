@@ -1,46 +1,12 @@
 version: 2.1
-
-orbs:
-  flutter-orb: circleci/flutter@1.1.0
-
 jobs:
-  analyze:
+  build:
     docker:
-      - image: circleci/flutter:2.10.3
+      - image: cirrusci/flutter
     steps:
       - checkout
-      - flutter-orb/install_sdk_and_pub:
-          flutter_version: 2.10.3
-      - run:
-          name: Lint and Analyze
-          command: flutter analyze
-
-  test:
-    docker:
-      - image: circleci/flutter:2.10.3
-    steps:
-      - checkout
-      - flutter-orb/install_sdk_and_pub:
-          flutter_version: 2.10.3
-      - flutter-orb/test
-
-  build_apk:
-    docker:
-      - image: circleci/flutter:2.10.3
-    steps:
-      - checkout
-      - flutter-orb/install_sdk_and_pub:
-          flutter_version: 2.10.3
-      - run:
-          name: Build APK
-          command: flutter build apk --release
+      - run: flutter doctor
+      - run: flutter test
+      - run: flutter build apk --release
       - store_artifacts:
           path: build/app/outputs/apk/release/app-release.apk
-
-workflows:
-  version: 2
-  test_and_build:
-    jobs:
-      - analyze
-      - test
-      - build_apk
