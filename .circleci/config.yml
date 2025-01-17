@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/flutter:3.19.6
+      - image: cirrusci/flutter:3.19.0
     steps:
       - checkout
 
