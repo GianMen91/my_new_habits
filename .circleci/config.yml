@@ -1,33 +1,30 @@
 version: 2.1
 
-orbs:
-  android: circleci/android@2.1.2
-  flutter-orb: circleci/flutter@1.1.0
-  ruby: circleci/ruby@1.8.0
-  macos: circleci/macos@2.3.1
-
 jobs:
-  lint_analyze_test_build:
+  build:
     docker:
-      - image: circleci/android:2022.03.1
-    resource_class: xlarge
+      - image: circleci/flutter:3.19.6
     steps:
       - checkout
-      - flutter-orb/install_sdk_and_pub:
-          flutter_version: 2.10.3
+
       - run:
-          name: Lint and Analyze
-          command: flutter analyze
+          name: Set up Flutter
+          command: flutter channel stable && flutter upgrade
+
       - run:
-          name: Run Tests
+          name: Get Flutter packages
+          command: flutter pub get
+
+      - run:
+          name: Analyze project source
+          command: dart analyze
+
+      - run:
+          name: Run Flutter unit tests
           command: flutter test
-      - run:
-          name: Build Release APK
-          command: flutter build apk --release
-      - store_artifacts:
-          path: build/app/outputs/apk/release/app-release.apk
 
 workflows:
-  lint_test_build:
+  version: 2
+  build_and_test:
     jobs:
-      - lint_analyze_test_build
+      - build
