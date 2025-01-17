@@ -3,8 +3,6 @@ jobs:
   build:
     docker:
       - image: cirrusci/flutter
-    executor:
-      name: default
     steps:
       - checkout
       - run: flutter version 3.13.0 # Pin Flutter version for compatibility
