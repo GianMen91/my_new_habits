@@ -11,7 +11,10 @@ jobs:
       - checkout
       - flutter/install_sdk:
           version: 3.19.0
-      - flutter/install_android_tools
+      - run:
+          name: Install Android SDK components
+          command: |
+            yes | sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.0"
       - run:
           name: Flutter doctor
           command: flutter doctor -v
