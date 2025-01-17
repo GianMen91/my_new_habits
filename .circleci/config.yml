@@ -6,6 +6,8 @@ jobs:
     steps:
       - checkout
       - run: flutter --version
+      - run: flutter upgrade
+      - run: flutter pub upgrade
       - run: flutter analyze
       - run: flutter test
       - run: flutter build apk --release
