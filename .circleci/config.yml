@@ -1,18 +1,28 @@
 version: '2.1'
+
 orbs:
   flutter: circleci/flutter@2.0.0
+
 jobs:
   distribute:
     macos:
-      xcode: 12.5.1
+      xcode: "12.5.1"
     steps:
+      - checkout
       - flutter/install_sdk_and_pub:
-          version: 3.0.3
-      - flutter/install_ios_pod
-      - flutter/install_ios_gem
+          version: "3.0.3"
       - run:
-          command: bundle exec fastlane distribute
-          working_directory: ios
+          name: Run Flutter Doctor
+          command: flutter doctor
+      - run:
+          name: Run Flutter Tests
+          command: flutter test
+      - run:
+          name: Build APK
+          command: flutter build apk --release
+      - store_artifacts:
+          path: build/app/outputs/apk/release/app-release.apk
+
 workflows:
   distribute:
     jobs:
