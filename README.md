@@ -38,6 +38,7 @@ The app
 - **intl**: Internationalization library for handling date formatting.
 - **Linting**: The codebase adheres to best practices and coding standards using lint rules.
 - **Widget Tests**: Extensive use of widget tests to ensure the robustness of the UI components, behaviors, and overall application functionality.
+- **Widgetbook**: A UI design and testing tool to visualize, test, and document individual widgets in isolation.
 - **CircleCI**: Used for continuous integration and deployment, ensuring automated builds and tests.
 
 ## Responsiveness
