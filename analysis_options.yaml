@@ -30,3 +30,4 @@ analyzer:
     - "widgetbook/**"    # Exclude resources directory from general analysis
   errors:
     use_build_context_synchronously: ignore
+    deprecated_member_use: ignore
